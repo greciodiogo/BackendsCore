@@ -6,7 +6,7 @@ services:
     container_name: docker_mysql
     environment:
       MYSQL_ROOT_PASSWORD: root_
-      MYSQL_DATABASE: remedios
+      MYSQL_DATABASE: at
     ports:
       - "3306:3306"
     volumes:

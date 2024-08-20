@@ -1,0 +1,6 @@
+    Route.get("/clientes/")
+    Route.post("/clientes/")
+    Route.get("/clientes/findAllAgentes");
+    Route.get("/getAgentes");
+
+
