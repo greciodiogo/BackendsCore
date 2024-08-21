@@ -1,10 +1,7 @@
 package com.unig4telco.grecio.diogo.Backend.crm.DTO;
 
-import jakarta.persistence.Enumerated;
-import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
 
-import java.time.LocalDate;
 import java.util.Date;
 
 public record CreateClientesDTO (

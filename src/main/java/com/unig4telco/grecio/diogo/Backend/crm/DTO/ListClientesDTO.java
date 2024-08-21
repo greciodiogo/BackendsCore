@@ -1,11 +1,11 @@
 package com.unig4telco.grecio.diogo.Backend.crm.DTO;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.unig4telco.grecio.diogo.Backend.crm.domain.Clientes;
-import com.unig4telco.grecio.diogo.Backend.crm.domain.TipoCliente;
 import com.unig4telco.grecio.diogo.Backend.geografica.DTO.PaisDTO;
 import com.unig4telco.grecio.diogo.Backend.geografica.DTO.ProvinciaDTO;
-import com.unig4telco.grecio.diogo.Backend.geografica.domain.Pais;
-import com.unig4telco.grecio.diogo.Backend.geografica.domain.Provincia;
+
+import java.util.Date;
 
 public record ListClientesDTO(
                 Integer id,
@@ -31,7 +31,11 @@ public record ListClientesDTO(
                 TipoNacionalidadeDTO tipo_nacionalidade,
                 Integer tipo_cliente_id,
                 TipoClienteDTO tipo_cliente,
-                Integer user_id 
+                Integer user_id, 
+                @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+                Date dataRegisto,
+                @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+                Date dataActualizacao
                 ) {
 
         public ListClientesDTO(Clientes cliente){
@@ -59,8 +63,9 @@ public record ListClientesDTO(
                         cliente.getTipo_nacionalidade() != null ? new TipoNacionalidadeDTO(cliente.getTipo_nacionalidade()) : null,
                         cliente.getTipo_cliente() != null ? cliente.getTipo_cliente().getId() : null,
                         cliente.getTipo_cliente() != null ? new TipoClienteDTO(cliente.getTipo_cliente()) : null,
-
-                        cliente.getUser_id()                        
+                        cliente.getUser_id(),                        
+                        cliente.getCreated_at(),                        
+                        cliente.getUpdated_at()                        
                         );       
         }
 }

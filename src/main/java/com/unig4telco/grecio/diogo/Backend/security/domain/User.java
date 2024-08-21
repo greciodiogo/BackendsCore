@@ -30,6 +30,7 @@ public class User implements UserDetails{
     private Boolean is_deleted;
     private Date created_at;
     private Date updated_at;
+    private Integer loja_id;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

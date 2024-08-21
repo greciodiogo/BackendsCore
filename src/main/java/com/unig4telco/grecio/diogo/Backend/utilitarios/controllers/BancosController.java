@@ -12,7 +12,7 @@ import com.unig4telco.grecio.diogo.Backend.utilitarios.DTO.BancosListDTO;
 import com.unig4telco.grecio.diogo.Backend.utilitarios.repositories.BancosRepository;
 
 @RestController
-@RequestMapping("/bancos")
+@RequestMapping("/api/bancos")
 public class BancosController {
     @Autowired
     private BancosRepository bancosRepository;
