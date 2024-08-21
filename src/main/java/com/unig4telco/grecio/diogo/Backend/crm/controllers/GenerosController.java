@@ -13,7 +13,7 @@ import com.unig4telco.grecio.diogo.Backend.crm.repositories.GeneroRepository;
 
 
 @RestController
-@RequestMapping("/api/generos")
+@RequestMapping("/generos")
 public class GenerosController {
     @Autowired
     private GeneroRepository generoRepository;

@@ -13,7 +13,7 @@ import com.unig4telco.grecio.diogo.Backend.crm.repositories.TipoNacionalidadeRep
 
 
 @RestController
-@RequestMapping("/api/tipo_nacionalidade")
+@RequestMapping("/tipo_nacionalidade")
 public class TipoNacionalidadeController {
     @Autowired
     private TipoNacionalidadeRepository tipoNacionalidadeRepository;

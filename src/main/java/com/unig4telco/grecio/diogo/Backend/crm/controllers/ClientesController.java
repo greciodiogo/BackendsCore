@@ -10,7 +10,7 @@ import com.unig4telco.grecio.diogo.Backend.crm.helpers.PaginationService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/clientes")
+@RequestMapping("/clientes")
 public class ClientesController {
     @Autowired
     private PaginationService paginationService;

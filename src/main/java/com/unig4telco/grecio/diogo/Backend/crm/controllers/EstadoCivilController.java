@@ -14,7 +14,7 @@ import com.unig4telco.grecio.diogo.Backend.crm.repositories.EstadoCivilRepositor
 
 
 @RestController
-@RequestMapping("/api/estado_civils")
+@RequestMapping("/estado_civils")
 public class EstadoCivilController {
     @Autowired
     private EstadoCivilRepository estadoCivilRepository;

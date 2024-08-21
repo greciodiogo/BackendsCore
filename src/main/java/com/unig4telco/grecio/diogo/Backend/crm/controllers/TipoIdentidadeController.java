@@ -13,7 +13,7 @@ import com.unig4telco.grecio.diogo.Backend.crm.repositories.TipoIdentidadeReposi
 
 
 @RestController
-@RequestMapping("/api/tipo_identidades")
+@RequestMapping("/tipo_identidades")
 public class TipoIdentidadeController {
     @Autowired
     private TipoIdentidadeRepository tipoIdentidadeRepository;
