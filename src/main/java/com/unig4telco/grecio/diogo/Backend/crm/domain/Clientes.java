@@ -53,6 +53,7 @@ public class Clientes {
     @JoinColumn(name="estado_civil_id", referencedColumnName = "id")
     private EstadoCivil estado_civil;
 
+<<<<<<< HEAD
     @ManyToOne
     @JoinColumn(name="tipo_cliente_id", referencedColumnName = "id")
     private TipoCliente tipo_cliente;
@@ -61,6 +62,8 @@ public class Clientes {
     @JoinColumn(name="tipo_nacionalidade_id", referencedColumnName = "id")
     private TipoNacionalidade tipo_nacionalidade;
 
+=======
+>>>>>>> 2b1f2cbf6f703623db71ea0317fe1361afa951c5
     private Integer identidade_id;
     private Integer pais_id;
     private Integer provincia_id;
