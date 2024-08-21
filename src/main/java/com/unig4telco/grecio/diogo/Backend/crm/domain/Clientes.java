@@ -44,19 +44,27 @@ public class Clientes {
     private String aprovacao_documentacao;
     private String origem;
     private String estado;
-    // private Integer genero_id;
     
     @ManyToOne
     @JoinColumn(name="genero_id", referencedColumnName = "id")
     private Generos genero;
 
-    private Integer estado_civil_id;
+    @ManyToOne
+    @JoinColumn(name="estado_civil_id", referencedColumnName = "id")
+    private EstadoCivil estado_civil;
+
+    @ManyToOne
+    @JoinColumn(name="tipo_cliente_id", referencedColumnName = "id")
+    private TipoCliente tipo_cliente;
+    
+    @ManyToOne
+    @JoinColumn(name="tipo_nacionalidade_id", referencedColumnName = "id")
+    private TipoNacionalidade tipo_nacionalidade;
+
     private Integer identidade_id;
-    private Integer tipo_nacionalidade_id;
     private Integer pais_id;
     private Integer provincia_id;
     private Integer municipio_id;
-    private Integer tipo_cliente_id;
     private Integer user_id;
     
     public void updateCliente(@Valid UpdateClienteDTO jsonBody){
