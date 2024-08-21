@@ -1,16 +1,11 @@
 package com.unig4telco.grecio.diogo.Backend.crm.controllers;
 
-import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import com.unig4telco.grecio.diogo.Backend.crm.DTO.*;
-import com.unig4telco.grecio.diogo.Backend.crm.domain.Clientes;
 import com.unig4telco.grecio.diogo.Backend.crm.helpers.PaginationService;
-import com.unig4telco.grecio.diogo.Backend.crm.repositories.ClienteRepository;
 
 import java.util.List;
 

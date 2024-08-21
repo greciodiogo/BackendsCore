@@ -6,6 +6,7 @@ public record ListClientesDTO(
                 Integer id,
                 String nome,
                 Integer genero_id,
+                GeneroDTO genero,
                 Integer estado_civil_id,
                 Integer identidade_id,
                 String email,
@@ -26,7 +27,8 @@ public record ListClientesDTO(
                 this(
                         cliente.getId(),
                         cliente.getNome(),
-                        cliente.getGenero_id(),
+                        cliente.getGenero() != null ? cliente.getGenero().getId() : null,
+                        cliente.getGenero() != null ? new GeneroDTO(cliente.getGenero()) : null,
                         cliente.getEstado_civil_id(),
                         cliente.getIdentidade_id(),
                         cliente.getEmail(),
@@ -41,7 +43,6 @@ public record ListClientesDTO(
                         cliente.getTipo_nacionalidade_id(),
                         cliente.getTipo_cliente_id(),
                         cliente.getUser_id()                        
-                        
                         );       
         }
 }
