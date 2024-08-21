@@ -44,13 +44,15 @@ public class Clientes {
     private String aprovacao_documentacao;
     private String origem;
     private String estado;
-    // private Integer genero_id;
     
     @ManyToOne
     @JoinColumn(name="genero_id", referencedColumnName = "id")
     private Generos genero;
 
-    private Integer estado_civil_id;
+    @ManyToOne
+    @JoinColumn(name="estado_civil_id", referencedColumnName = "id")
+    private EstadoCivil estado_civil;
+
     private Integer identidade_id;
     private Integer tipo_nacionalidade_id;
     private Integer pais_id;
