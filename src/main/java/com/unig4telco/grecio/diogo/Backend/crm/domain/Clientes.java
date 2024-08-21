@@ -7,6 +7,9 @@ import lombok.*;
 import java.util.Date;
 
 import com.unig4telco.grecio.diogo.Backend.crm.DTO.*;
+import com.unig4telco.grecio.diogo.Backend.geografica.domain.Municipio;
+import com.unig4telco.grecio.diogo.Backend.geografica.domain.Pais;
+import com.unig4telco.grecio.diogo.Backend.geografica.domain.Provincia;
 
 @Getter
 @Setter
@@ -53,7 +56,6 @@ public class Clientes {
     @JoinColumn(name="estado_civil_id", referencedColumnName = "id")
     private EstadoCivil estado_civil;
 
-<<<<<<< HEAD
     @ManyToOne
     @JoinColumn(name="tipo_cliente_id", referencedColumnName = "id")
     private TipoCliente tipo_cliente;
@@ -61,13 +63,24 @@ public class Clientes {
     @ManyToOne
     @JoinColumn(name="tipo_nacionalidade_id", referencedColumnName = "id")
     private TipoNacionalidade tipo_nacionalidade;
+    
+    @ManyToOne
+    @JoinColumn(name="identidade_id", referencedColumnName = "id")
+    private Identidade identidade;
 
-=======
->>>>>>> 2b1f2cbf6f703623db71ea0317fe1361afa951c5
-    private Integer identidade_id;
-    private Integer pais_id;
-    private Integer provincia_id;
-    private Integer municipio_id;
+
+    @ManyToOne
+    @JoinColumn(name="pais_id", referencedColumnName = "id")
+    private Pais pais;
+
+    @ManyToOne
+    @JoinColumn(name="provincia_id", referencedColumnName = "id")
+    private Provincia provincia;
+
+    @ManyToOne
+    @JoinColumn(name="municipio_id", referencedColumnName = "id")
+    private Municipio municipio;
+
     private Integer user_id;
     
     public void updateCliente(@Valid UpdateClienteDTO jsonBody){

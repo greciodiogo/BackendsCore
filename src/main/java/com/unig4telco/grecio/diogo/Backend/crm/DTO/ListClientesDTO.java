@@ -2,6 +2,10 @@ package com.unig4telco.grecio.diogo.Backend.crm.DTO;
 
 import com.unig4telco.grecio.diogo.Backend.crm.domain.Clientes;
 import com.unig4telco.grecio.diogo.Backend.crm.domain.TipoCliente;
+import com.unig4telco.grecio.diogo.Backend.geografica.DTO.PaisDTO;
+import com.unig4telco.grecio.diogo.Backend.geografica.DTO.ProvinciaDTO;
+import com.unig4telco.grecio.diogo.Backend.geografica.domain.Pais;
+import com.unig4telco.grecio.diogo.Backend.geografica.domain.Provincia;
 
 public record ListClientesDTO(
                 Integer id,
@@ -11,6 +15,7 @@ public record ListClientesDTO(
                 Integer estado_civil_id,
                 EstadoCivilDTO estado_civil,
                 Integer identidade_id,
+                IdentidadeDTO identidade,
                 String email,
                 String morada,
                 String contribuente,
@@ -19,7 +24,9 @@ public record ListClientesDTO(
                 String origem,
                 String estado,
                 Integer pais_id,
+                PaisDTO pais,
                 Integer provincia_id,
+                ProvinciaDTO provincia,
                 Integer tipo_nacionalidade_id,
                 TipoNacionalidadeDTO tipo_nacionalidade,
                 Integer tipo_cliente_id,
@@ -35,7 +42,8 @@ public record ListClientesDTO(
                         cliente.getGenero() != null ? new GeneroDTO(cliente.getGenero()) : null,
                         cliente.getEstado_civil() != null ? cliente.getEstado_civil().getId() : null,
                         cliente.getEstado_civil() != null ? new EstadoCivilDTO(cliente.getEstado_civil()) : null,
-                        cliente.getIdentidade_id(),
+                        cliente.getIdentidade() != null ? cliente.getIdentidade().getId() : null,
+                        cliente.getIdentidade() != null ? new IdentidadeDTO(cliente.getIdentidade()) : null,
                         cliente.getEmail(),
                         cliente.getMorada(),
                         cliente.getContribuente(),
@@ -43,8 +51,10 @@ public record ListClientesDTO(
                         cliente.getAprovacao_documentacao(),
                         cliente.getOrigem(),
                         cliente.getEstado(),
-                        cliente.getPais_id(),
-                        cliente.getProvincia_id(),
+                        cliente.getPais() != null ? cliente.getPais().getId() : null,
+                        cliente.getPais() != null ? new PaisDTO(cliente.getPais()) : null,
+                        cliente.getProvincia() != null ? cliente.getProvincia().getId() : null,
+                        cliente.getProvincia() != null ? new ProvinciaDTO(cliente.getProvincia()) : null,
                         cliente.getTipo_nacionalidade() != null ? cliente.getTipo_nacionalidade().getId() : null,
                         cliente.getTipo_nacionalidade() != null ? new TipoNacionalidadeDTO(cliente.getTipo_nacionalidade()) : null,
                         cliente.getTipo_cliente() != null ? cliente.getTipo_cliente().getId() : null,
