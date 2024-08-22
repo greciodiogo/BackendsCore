@@ -20,7 +20,7 @@ public class ClienteService {
     }
     
         public Page<ListClientesDTO> findAll(int pageNo, int pageSize) {
-            Pageable pageable = PageRequest.of(pageNo, pageSize).withSort(Sort.Direction.DESC, "id");
+            Pageable pageable = PageRequest.of(pageNo, pageSize).withSort(Sort.Direction.DESC, "createdAt");
             var data = clienteRepository.findAll(pageable);
         return data.map(ListClientesDTO::new);
     }

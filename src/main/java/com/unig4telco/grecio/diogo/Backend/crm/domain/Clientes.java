@@ -29,8 +29,8 @@ public class Clientes {
         this.contribuente = createClientesDTO.contribuente();
         this.email = createClientesDTO.email();
         this.morada = createClientesDTO.morada();
-       this.created_at = createClientesDTO.created_at();
-        this.updated_at = createClientesDTO.updated_at();
+       this.createdAt = createClientesDTO.created_at();
+        this.updatedAt = createClientesDTO.updated_at();
     }
 
     @Id
@@ -42,8 +42,10 @@ public class Clientes {
     private String direccao;
     private String email;
     private String morada;
-    private Date created_at;
-    private Date updated_at;
+    @Column(name = "created_at")
+    private Date createdAt;
+    @Column(name = "updated_at")
+    private Date updatedAt;
     private String aprovacao_documentacao;
     private String origem;
     private String estado;

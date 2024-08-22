@@ -32,6 +32,8 @@ public record ListClientesDTO(
                 Integer tipo_cliente_id,
                 TipoClienteDTO tipo_cliente,
                 Integer user_id, 
+                Date created_at,
+                Date updated_at,
                 @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
                 Date dataRegisto,
                 @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
@@ -64,8 +66,10 @@ public record ListClientesDTO(
                         cliente.getTipo_cliente() != null ? cliente.getTipo_cliente().getId() : null,
                         cliente.getTipo_cliente() != null ? new TipoClienteDTO(cliente.getTipo_cliente()) : null,
                         cliente.getUser_id(),                        
-                        cliente.getCreated_at(),                        
-                        cliente.getUpdated_at()                        
+                        cliente.getCreatedAt(),                        
+                        cliente.getUpdatedAt(),                        
+                        cliente.getCreatedAt(),                        
+                        cliente.getUpdatedAt()                        
                         );       
         }
 }
