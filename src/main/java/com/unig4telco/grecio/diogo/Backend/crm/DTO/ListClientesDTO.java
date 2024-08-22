@@ -38,7 +38,7 @@ public record ListClientesDTO(
                 Date dataActualizacao
                 ) {
 
-        public ListClientesDTO(Clientes cliente){
+        public ListClientesDTO (Clientes cliente){
                 this(
                         cliente.getId(),
                         cliente.getNome(),

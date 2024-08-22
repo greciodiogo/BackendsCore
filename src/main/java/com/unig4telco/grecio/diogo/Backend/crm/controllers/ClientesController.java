@@ -1,11 +1,18 @@
 package com.unig4telco.grecio.diogo.Backend.crm.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.unig4telco.grecio.diogo.Backend.crm.DTO.*;
+import com.unig4telco.grecio.diogo.Backend.crm.controllers.DTO.ApiResponse;
+import com.unig4telco.grecio.diogo.Backend.crm.controllers.DTO.PaginationResponse;
 import com.unig4telco.grecio.diogo.Backend.crm.helpers.PaginationService;
+import com.unig4telco.grecio.diogo.Backend.crm.services.ClienteService;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.List;
 
 import java.util.List;
 
@@ -14,8 +21,8 @@ import java.util.List;
 public class ClientesController {
     @Autowired
     private PaginationService paginationService;
-//    @Autowired
-//    private ClienteRepository repository;
+   @Autowired
+   private ClienteService clienteService;
 //
 //    @PostMapping
 //    @Transactional
@@ -27,10 +34,27 @@ public class ClientesController {
 //        return ResponseEntity.created(uri).body(new ClienteDetailDTO(cliente));
 //    }
 
+    // @GetMapping
+    // public ResponseEntity<List<ListClientesDTO>> getClientesWithPagination() {
+    //     var lista = paginationService.getClientesWithPagination(1,6).stream().map(ListClientesDTO::new).toList();
+    //     return ResponseEntity.ok(lista);
+    // }
+
+    
     @GetMapping
-    public ResponseEntity<List<ListClientesDTO>> getClientesWithPagination() {
-        var lista = paginationService.getClientesWithPagination(1,6).stream().map(ListClientesDTO::new).toList();
-        return ResponseEntity.ok(lista);
+    public ResponseEntity<ApiResponse<ListClientesDTO>> index(
+        @RequestParam(defaultValue = "1") int pageNo,
+        @RequestParam(defaultValue = "5") int pageSize) {
+    
+        var pageResponse = clienteService.findAll(pageNo, pageSize);
+    
+        // Criação da resposta com paginação
+        var apiResponse = new ApiResponse<>(
+            pageResponse.getContent(),                        // Dados paginados
+            PaginationResponse.fromPage(pageResponse)         // Detalhes de paginação
+        );
+    
+        return ResponseEntity.ok(apiResponse);
     }
 
 //    @PutMapping

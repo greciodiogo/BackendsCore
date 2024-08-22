@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.unig4telco.grecio.diogo.Backend.crm.DTO.EstadoCivilDTO;
-import com.unig4telco.grecio.diogo.Backend.crm.DTO.GeneroDTO;
 import com.unig4telco.grecio.diogo.Backend.crm.repositories.EstadoCivilRepository;
 
 
