@@ -24,10 +24,10 @@ public class Organismo {
     private Boolean is_deleted;
     private Integer user_id;
     
-    @Column(name = "createdAt")
-    private Date created_at;
+    @Column(name = "created_at")
+    private Date createdAt;
     
-    @Column(name = "updatedAt")
-    private Date updated_at;
+    @Column(name = "updated_at")
+    private Date updatedAt;
 
 }
