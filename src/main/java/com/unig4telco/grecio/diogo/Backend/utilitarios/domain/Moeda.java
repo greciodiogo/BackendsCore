@@ -10,26 +10,28 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-@Entity(name="bancos")
-@Table(name = "bancos")
-public class Bancos {
+@Entity(name="moedas")
+@Table(name = "moedas")
+public class Moeda {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nome;
-    private String abreviatura;
+    
+    @Column(name = "codigo_iso")
+    private String codigoIso;
+    
+    private String descricao;
+    private String unidade_fracionaria;
     private Boolean activo;
     private Boolean is_deleted;
     private Integer user_id;
-   
-    @ManyToOne
-    @JoinColumn(name = "moeda_id", referencedColumnName = "id")
-    private Moeda moeda;
     
-    private String numero_conta;
-    private String iban;
-    private Date created_at;
-    private Date updated_at;
+    @Column(name = "created_at")
+    private Date createdAt;
+    
+    @Column(name = "updated_at")
+    private Date updatedAt;
 
 }
