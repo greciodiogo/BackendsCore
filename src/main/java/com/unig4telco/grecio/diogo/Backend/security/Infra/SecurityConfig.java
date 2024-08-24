@@ -29,6 +29,7 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Sem sessão (útil para APIs RESTful)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll() // Permitir POST em /login
+                        .requestMatchers(HttpMethod.GET, "/api/**").authenticated() // Permitir qualquer outra rota após a autenticação
                         .anyRequest().authenticated()) // Qualquer outra requisição deve ser autenticada
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class); // Adicionando filtro customizado
 

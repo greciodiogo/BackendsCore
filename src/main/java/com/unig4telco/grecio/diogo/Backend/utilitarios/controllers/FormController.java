@@ -6,8 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.unig4telco.grecio.diogo.Backend.crm.DTO.TipoClienteDTO;
+import com.unig4telco.grecio.diogo.Backend.crm.repositories.TipoClienteRepository;
 import com.unig4telco.grecio.diogo.Backend.utilitarios.DTO.BancosListDTO;
 import com.unig4telco.grecio.diogo.Backend.utilitarios.DTO.CambioDTO;
 import com.unig4telco.grecio.diogo.Backend.utilitarios.DTO.DocumentoDTO;
@@ -36,6 +39,8 @@ public class FormController {
     private DocumentoRepository documentoRepository;
     @Autowired
     private SerieRepository serieRepository;
+    @Autowired
+    private TipoClienteRepository tipoClienteRepository;
 
         @GetMapping("/bancos")
     public ResponseEntity<List<BancosListDTO>> getBancos() {
@@ -71,6 +76,29 @@ public class FormController {
     public ResponseEntity<List<SerieDTO>> getSeries() {
         var lista = serieRepository.findAll().stream().map(SerieDTO::new).toList();
         return ResponseEntity.ok(lista);
+    }
+ 
+    @GetMapping("/getTypesClient")
+    public ResponseEntity<List<TipoClienteDTO>> getTypesClient() {
+           var lista = tipoClienteRepository.findAll().stream()
+                                            .map(TipoClienteDTO::new)
+                                            .toList();
+            return ResponseEntity.ok(lista);
+        
+    }
+ 
+    @GetMapping("/getTypesClientBySlug")
+    public ResponseEntity<List<TipoClienteDTO>> getTypesClientBySlug(@RequestParam(required = false) String slug) {
+        if (slug != null) {
+            var tipoCliente = tipoClienteRepository.findBySlug(slug).stream()
+            .map(TipoClienteDTO::new).toList();
+            return ResponseEntity.ok(tipoCliente);
+        } else {
+            var lista = tipoClienteRepository.findAll().stream()
+                                            .map(TipoClienteDTO::new)
+                                            .toList();
+            return ResponseEntity.ok(lista);
+        }
     }
  
 }
