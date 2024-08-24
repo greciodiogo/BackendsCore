@@ -5,7 +5,7 @@ import org.springframework.data.domain.Page;
 public record PaginationResponse(Integer page,
                                  Integer perPage,
                                  Long total,
-                                 Integer totalPages) {
+                                 Integer lastPage) {
 
     public static PaginationResponse fromPage(Page<?> page) {
         return new PaginationResponse(

@@ -12,13 +12,9 @@ import com.unig4telco.grecio.diogo.Backend.crm.repositories.ClienteRepository;
 
 @Service
 public class ClienteService {
-    private final ClienteRepository clienteRepository;
-    
     @Autowired
-    public ClienteService(ClienteRepository clienteRepository) {
-        this.clienteRepository = clienteRepository;
-    }
-    
+    private ClienteRepository clienteRepository;
+        
         public Page<ListClientesDTO> findAll(int pageNo, int pageSize) {
             Pageable pageable = PageRequest.of(pageNo, pageSize).withSort(Sort.Direction.DESC, "createdAt");
             var data = clienteRepository.findAll(pageable);

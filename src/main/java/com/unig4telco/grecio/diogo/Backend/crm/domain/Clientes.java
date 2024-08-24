@@ -39,9 +39,17 @@ public class Clientes {
     private String nome;
     private String contribuente;
     private String telefone;
+    private Integer direccao_id;
     private String direccao;
     private String email;
     private String morada;
+    private String codigo_chamada;
+    private Integer distrito_id;
+    private String facebook;
+    private String numero_whatsapp;
+    private String observacao;
+    // @Column(name = "data_nascimento")
+    // private DateTime DataNascimento;
     @Column(name = "created_at")
     private Date createdAt;
     @Column(name = "updated_at")

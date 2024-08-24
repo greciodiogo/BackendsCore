@@ -7,7 +7,7 @@ public record ApiResponse<T>(
     int page,
     int perPage,
     long total,
-    int totalPages) {      
+    int lastPage) {      
     
     public ApiResponse(List<T> data, PaginationResponse pagination){
         this(
@@ -15,7 +15,7 @@ public record ApiResponse<T>(
             pagination.page(),
             pagination.perPage(),
             pagination.total(),
-            pagination.totalPages()  
+            pagination.lastPage()
         );
     }
 }
