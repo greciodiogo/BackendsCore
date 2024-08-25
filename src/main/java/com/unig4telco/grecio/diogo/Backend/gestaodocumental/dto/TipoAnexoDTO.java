@@ -8,8 +8,8 @@ public record TipoAnexoDTO(
     String descricao,
     String area,
     Integer tipo_anexo_id_pai,
-    Boolean tipoBancario
-    // String tipoDependencia
+    Boolean tipoBancario,
+    String tipoDependencia
 ) {
     public TipoAnexoDTO(TipoAnexo tipoAnexo){
         this(
@@ -18,8 +18,8 @@ public record TipoAnexoDTO(
             tipoAnexo.getDescricao(),
             tipoAnexo.getArea(),
             tipoAnexo.getTipo_anexo_id_pai(),
-            tipoAnexo.getTipoBancario()
-            // tipoAnexo.getTipoDependencia()
+            tipoAnexo.getTipoBancario(),
+            tipoAnexo.getTipoDependencia()
         );
     }
     

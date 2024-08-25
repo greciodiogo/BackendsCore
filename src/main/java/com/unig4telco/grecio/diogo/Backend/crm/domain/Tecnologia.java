@@ -20,8 +20,8 @@ public class Tecnologia {
     private String nome; 
     private String opcao;
     private Boolean is_sip; 
-    // @Column(name = "tipoFacturacao")
-    // private String facturacao;
+    @Column(name = "tipoFacturacao")
+    private String tipoFacturacao;
     private String rota_insert_dispositivo;
     private String rota_list_dispositivo; 
     private Integer user_id; ;

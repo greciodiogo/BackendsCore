@@ -15,7 +15,7 @@ public class ClienteService {
     @Autowired
     private ClienteRepository clienteRepository;
         
-        public Page<ListClientesDTO> findAll(int pageNo, int pageSize) {
+        public Page<ListClientesDTO> findAll(int pageNo, int pageSize, String typeClientId) {
             Pageable pageable = PageRequest.of(pageNo, pageSize).withSort(Sort.Direction.DESC, "createdAt");
             var data = clienteRepository.findAll(pageable);
         return data.map(ListClientesDTO::new);

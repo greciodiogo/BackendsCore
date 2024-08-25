@@ -23,8 +23,8 @@ public class TipoAnexo {
     private Integer tipo_anexo_id_pai;
     @Column(name = "tipo_bancario")
     private Boolean tipoBancario;
-    // @Column(name = "tipo_dependencia")
-    // private String tipoDependencia;
+    @Column(name = "tipoDependencia")
+    private String tipoDependencia;
     private Boolean is_deleted;
     private Integer user_id;
     

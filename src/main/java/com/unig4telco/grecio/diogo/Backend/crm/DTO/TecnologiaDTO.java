@@ -6,16 +6,16 @@ public record TecnologiaDTO(
     Integer id,
     String nome, 
     String opcao,
-    Boolean is_sip
-    // String facturacao
+    Boolean is_sip,
+    String tipoFacturacao
 ) {
     public TecnologiaDTO(Tecnologia tecnologia){
         this(
             tecnologia.getId(),
             tecnologia.getNome(),
             tecnologia.getOpcao(),
-            tecnologia.getIs_sip()
-            // tecnologia.getFacturacao()
+            tecnologia.getIs_sip(),
+            tecnologia.getTipoFacturacao()
         );
     }
 

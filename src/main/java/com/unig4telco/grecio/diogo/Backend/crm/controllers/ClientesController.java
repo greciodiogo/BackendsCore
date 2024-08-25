@@ -43,10 +43,18 @@ public class ClientesController {
     
     @GetMapping
     public ResponseEntity<ApiResponse<ListClientesDTO>> index(
-        @RequestParam(defaultValue = "1") int pageNo,
-        @RequestParam(defaultValue = "5") int pageSize) {
+        @RequestParam(defaultValue = "1") int page,
+        @RequestParam(defaultValue = "5") int perPage,
+        @RequestParam(defaultValue = "id") String orderBy,
+        @RequestParam(defaultValue = "DESC") String typeOrderBy,
+        @RequestParam(defaultValue = "") String typeFilter,
+        @RequestParam(defaultValue = "") String search,
+        @RequestParam(defaultValue = "") String document,
+        @RequestParam(defaultValue = "") String estado,
+        @RequestParam(defaultValue = "") String typeClientId
+        ) {
     
-        var pageResponse = clienteService.findAll(pageNo, pageSize);
+        var pageResponse = clienteService.findAll(page, perPage,typeClientId);
     
         // Criação da resposta com paginação
         var apiResponse = new ApiResponse<>(

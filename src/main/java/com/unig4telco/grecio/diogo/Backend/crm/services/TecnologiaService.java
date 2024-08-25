@@ -17,7 +17,7 @@ public class TecnologiaService {
         return tecnologiaRepository.findAll();
     }
 
-    // public List<Tecnologia> tipoFacturacao(String tipoFacturacao) {
-    //     return tecnologiaRepository.findByTipoFacturacao(tipoFacturacao);
-    // }
+    public List<Tecnologia> findByTipoFacturacao(String tipoFacturacao) {
+        return tecnologiaRepository.findByTipoFacturacao(tipoFacturacao);
+    }
 }

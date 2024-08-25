@@ -7,5 +7,5 @@ import com.unig4telco.grecio.diogo.Backend.crm.domain.Tecnologia;
 public interface TecnologiaRepository extends JpaRepository <Tecnologia, Long>{
     List<Tecnologia> findAll();
 
-    // List<Tecnologia> findByTipoFacturacao(String tipoFacturacao);
+    List<Tecnologia> findByTipoFacturacao(String tipoFacturacao);
 }
