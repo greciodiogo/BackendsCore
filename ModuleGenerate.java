@@ -69,9 +69,9 @@ public class ModuleGenerate {
                        "    @GeneratedValue(strategy = GenerationType.IDENTITY)\n" +
                        "    private Integer id;\n" +
                        "    private String descricao;\n" +
-                       "    @Column(name = 'created_at')"+
+                       "    @Column(name = \"created_at\")"+
                        "    private Date createdAt;\n" +
-                       "    @Column(name = 'updated_at')"+
+                       "    @Column(name = \"updated_at\")"+
                        "    private Date updatedAt;\n" +
                        "}\n";
 
@@ -122,7 +122,7 @@ public class ModuleGenerate {
                        "import " + basePackage + ".domain." + className + ";\n" +
                        "import " + basePackage + ".services." + className + "Service;\n\n" +
                        "@RestController\n" +
-                       "@RequestMapping(\"/api/" + moduleName.toLowerCase() + "s\")\n" +
+                       "@RequestMapping(\"/" + moduleName.toLowerCase() + "s\")\n" +
                        "public class " + className + "Controller {\n\n" +
                        "    private final " + className + "Service " + moduleName.toLowerCase() + "Service;\n\n" +
                        "    @Autowired\n" +
