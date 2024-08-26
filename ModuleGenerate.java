@@ -56,6 +56,7 @@ public class ModuleGenerate {
                 return "package " + basePackage + ".domain;\n\n" +
                        "import jakarta.persistence.*;\n" +
                        "import lombok.*;\n\n" +
+                       "import java.util.Date;\n\n" +
                        "@Getter\n" +
                        "@Setter\n" +
                        "@NoArgsConstructor\n" +
@@ -68,6 +69,10 @@ public class ModuleGenerate {
                        "    @GeneratedValue(strategy = GenerationType.IDENTITY)\n" +
                        "    private Integer id;\n" +
                        "    private String descricao;\n" +
+                       "    @Column(name = 'created_at')"+
+                       "    private Date createdAt;\n" +
+                       "    @Column(name = 'updated_at')"+
+                       "    private Date updatedAt;\n" +
                        "}\n";
 
             case "repositories":
