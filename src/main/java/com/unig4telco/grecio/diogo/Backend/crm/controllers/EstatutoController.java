@@ -1,6 +1,5 @@
 package com.unig4telco.grecio.diogo.Backend.crm.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -13,7 +12,6 @@ public class EstatutoController {
 
     private final EstatutoService estatutoService;
 
-    @Autowired
     public EstatutoController(EstatutoService estatutoService) {
         this.estatutoService = estatutoService;
     }
