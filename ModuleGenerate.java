@@ -115,23 +115,21 @@ public class ModuleGenerate {
 
             case "controllers":
                 return "package " + basePackage + ".controllers;\n\n" +
-                       "import org.springframework.beans.factory.annotation.Autowired;\n" +
                        "import org.springframework.http.ResponseEntity;\n" +
                        "import org.springframework.web.bind.annotation.*;\n" +
                        "import java.util.List;\n" +
-                       "import " + basePackage + ".domain." + className + ";\n" +
+                       "import " + basePackage + ".DTO." + className + "DTO" + ";\n" +
                        "import " + basePackage + ".services." + className + "Service;\n\n" +
                        "@RestController\n" +
                        "@RequestMapping(\"/" + moduleName.toLowerCase() + "s\")\n" +
                        "public class " + className + "Controller {\n\n" +
                        "    private final " + className + "Service " + moduleName.toLowerCase() + "Service;\n\n" +
-                       "    @Autowired\n" +
                        "    public " + className + "Controller(" + className + "Service " + moduleName.toLowerCase() + "Service) {\n" +
                        "        this." + moduleName.toLowerCase() + "Service = " + moduleName.toLowerCase() + "Service;\n" +
                        "    }\n\n" +
                        "    @GetMapping\n" +
-                       "    public ResponseEntity<List<" + className + ">> findAll() {\n" +
-                       "        List<" + className + "> lista = " + moduleName.toLowerCase() + "Service.findAll();\n" +
+                       "    public ResponseEntity<List<" + className + "DTO" + ">> findAll() {\n" +
+                       "        List<" + className + "DTO" + "> lista = " + moduleName.toLowerCase() + "Service.findAll().stream().map(" + className + "DTO::new).toList()" + ";\n" +
                        "        return ResponseEntity.ok(lista);\n" +
                        "    }\n" +
                        "}\n";
