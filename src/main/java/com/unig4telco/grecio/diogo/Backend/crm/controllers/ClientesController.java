@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.unig4telco.grecio.diogo.Backend.crm.DTO.*;
 import com.unig4telco.grecio.diogo.Backend.crm.controllers.DTO.ApiResponse;
+import com.unig4telco.grecio.diogo.Backend.crm.controllers.DTO.EnvelopeResponse;
 import com.unig4telco.grecio.diogo.Backend.crm.controllers.DTO.PaginationResponse;
 import com.unig4telco.grecio.diogo.Backend.crm.helpers.PaginationService;
 import com.unig4telco.grecio.diogo.Backend.crm.services.ClienteService;
@@ -42,7 +43,7 @@ public class ClientesController {
 
     
     @GetMapping
-    public ResponseEntity<ApiResponse<ListClientesDTO>> index(
+    public ResponseEntity<EnvelopeResponse<ApiResponse<ListClientesDTO>>> index(
         @RequestParam(defaultValue = "1") int page,
         @RequestParam(defaultValue = "5") int perPage,
         @RequestParam(defaultValue = "id") String orderBy,
@@ -50,19 +51,31 @@ public class ClientesController {
         @RequestParam(defaultValue = "") String typeFilter,
         @RequestParam(defaultValue = "") String search,
         @RequestParam(defaultValue = "") String document,
-        @RequestParam(defaultValue = "") String estado,
-        @RequestParam(defaultValue = "") String typeClientId
+        @RequestParam(defaultValue = "") String status,
+        @RequestParam(defaultValue = "") String estadoRegisto,
+        @RequestParam(defaultValue = "") String typeClientId,
+        @RequestParam(defaultValue = "") String tipoConta,
+        @RequestParam(defaultValue = "") String typeRegistoCliente,
+        @RequestParam(defaultValue = "") String paisId,
+        @RequestParam(defaultValue = "") String provinciaId,
+        @RequestParam(defaultValue = "") String municipioId
         ) {
     
-        var pageResponse = clienteService.findAll(page, perPage,typeClientId);
+        var pageResponse = clienteService.findAll(page, perPage, typeClientId, document, estadoRegisto, search);
     
         // Criação da resposta com paginação
         var apiResponse = new ApiResponse<>(
             pageResponse.getContent(),                        // Dados paginados
             PaginationResponse.fromPage(pageResponse)         // Detalhes de paginação
         );
+
+        var envelopeResponse = new EnvelopeResponse<>(
+            apiResponse,          // Dados dentro da chave "data"
+            "",                // Mensagem
+            200                  // Result, caso precise adicionar algo no futuro
+        );
     
-        return ResponseEntity.ok(apiResponse);
+        return ResponseEntity.ok(envelopeResponse);
     }
 
 //    @PutMapping
