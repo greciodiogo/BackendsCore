@@ -1,5 +1,6 @@
 package com.unig4telco.grecio.diogo.Backend.crm.DTO;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -39,7 +40,7 @@ public record ListClientesDTO(
                 Integer tipo_cliente_id,
                 TipoClienteDTO tipoCliente,
                 Integer user_id, 
-                // Date data_nascimento,
+                LocalDate DataNascimento,
                 Date created_at,
                 Date updated_at,
                 @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
@@ -81,7 +82,7 @@ public record ListClientesDTO(
                         cliente.getTipo_cliente() != null ? cliente.getTipo_cliente().getId() : null,
                         cliente.getTipo_cliente() != null ? new TipoClienteDTO(cliente.getTipo_cliente()) : null,
                         cliente.getUser_id(),                        
-                        // cliente.getDataNascimento(),                        
+                        cliente.getDataNascimento(),                        
                         cliente.getCreatedAt(),                        
                         cliente.getUpdatedAt(),                        
                         cliente.getCreatedAt(),                        

@@ -5,6 +5,7 @@ import jakarta.validation.Valid;
 import lombok.*;
 
 import java.util.Date;
+import java.time.LocalDate;
 
 import com.unig4telco.grecio.diogo.Backend.crm.DTO.*;
 import com.unig4telco.grecio.diogo.Backend.geografica.domain.Municipio;
@@ -48,8 +49,8 @@ public class Clientes {
     private String facebook;
     private String numero_whatsapp;
     private String observacao;
-    // @Column(name = "data_nascimento")
-    // private DateTime DataNascimento;
+    @Column(name = "data_nascimento")
+    private LocalDate dataNascimento;
     @Column(name = "created_at")
     private Date createdAt;
     @Column(name = "updated_at")
