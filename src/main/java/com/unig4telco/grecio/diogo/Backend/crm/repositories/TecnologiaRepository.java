@@ -1,11 +1,14 @@
 package com.unig4telco.grecio.diogo.Backend.crm.repositories;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
-import java.util.List;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+
 import com.unig4telco.grecio.diogo.Backend.crm.domain.Tecnologia;
 
-public interface TecnologiaRepository extends JpaRepository <Tecnologia, Long>{
-    List<Tecnologia> findAll();
+public interface TecnologiaRepository extends JpaRepository <Tecnologia, Long>, JpaSpecificationExecutor<Tecnologia>{
 
-    List<Tecnologia> findByTipoFacturacao(String tipoFacturacao);
+    Page<Tecnologia> findByTipoFacturacao(Specification<Tecnologia> spec, Pageable pageable, String tipoFacturacao);
 }
