@@ -51,4 +51,32 @@ public class ClientesController {
         return ResponseEntity.ok(envelopeResponse);
     }
 
+    @GetMapping("/birthday")
+    public ResponseEntity<EnvelopeResponse<ApiResponse<BirthdayPersonList>>> findBirthdayPerson(
+        @RequestParam(defaultValue = "1") int page,
+        @RequestParam(defaultValue = "5") int perPage,
+        @RequestParam(defaultValue = "id") String orderBy,
+        @RequestParam(defaultValue = "DESC") String typeOrderBy,
+        @RequestParam(defaultValue = "") String typeFilter,
+        @RequestParam(defaultValue = "") String search,
+        @RequestParam(defaultValue = "") String mes,
+        @RequestParam(defaultValue = "") String tipoClienteId,
+        @RequestParam(defaultValue = "") String dataAniversario
+        ) {
+        var pageResponse = clienteService.findBirthdayPerson(page, perPage, tipoClienteId, mes, dataAniversario, search);
+    
+        var apiResponse = new ApiResponse<>(
+            pageResponse.getContent(),                        // Dados paginados
+            PaginationResponse.fromPage(pageResponse)         // Detalhes de paginação
+        );
+
+        var envelopeResponse = new EnvelopeResponse<>(
+            apiResponse,          // Dados dentro da chave "data"
+            "",                // Mensagem
+            200                  // Result, caso precise adicionar algo no futuro
+        );
+    
+        return ResponseEntity.ok(envelopeResponse);
+    }
+
 }
