@@ -1,7 +1,5 @@
 package com.unig4telco.grecio.diogo.Backend.crm.controllers;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.unig4telco.grecio.diogo.Backend.crm.DTO.TecnologiaDTO;
+import com.unig4telco.grecio.diogo.Backend.crm.controllers.DTO.ApiResponseDTO;
+import com.unig4telco.grecio.diogo.Backend.crm.controllers.DTO.PaginationResponse;
 import com.unig4telco.grecio.diogo.Backend.crm.services.TecnologiaService;
 
 @RestController
@@ -19,17 +19,32 @@ public class TecnologiasController {
     private TecnologiaService tecnologiaService;
 
         @GetMapping
-    public ResponseEntity<List<TecnologiaDTO>> getTecnologias() {
-        var lista = tecnologiaService.findAll().stream().map(TecnologiaDTO::new).toList();
-        return ResponseEntity.ok(lista);
+    public ResponseEntity<ApiResponseDTO<TecnologiaDTO>> getTecnologias() {
+        var pageResponse = tecnologiaService.findAll();
+       
+        ApiResponseDTO<TecnologiaDTO> data = new ApiResponseDTO<>(
+            pageResponse.getContent(),                            // Dados paginados
+            PaginationResponse.fromPage(pageResponse),            // MetaData
+            null,                                         // Mensagem (ou passe uma string)
+            200                                        // Código de status
+            );
+        return ResponseEntity.ok(data);
     }
 
         @GetMapping("/getTecnologiasByType")
-    public ResponseEntity<List<TecnologiaDTO>> getTecnologiasByType(
+    public ResponseEntity<ApiResponseDTO<TecnologiaDTO>> getTecnologiasByType(
         @RequestParam(defaultValue = "") String tipoFacturacao
     ) {
-        var lista = tecnologiaService.findByTipoFacturacao(tipoFacturacao).stream().map(TecnologiaDTO::new).toList();
-        return ResponseEntity.ok(lista);
+        
+        var pageResponse = tecnologiaService.findByTipoFacturacao(tipoFacturacao);
+       
+        ApiResponseDTO<TecnologiaDTO> data = new ApiResponseDTO<>(
+            pageResponse.getContent(),                            // Dados paginados
+            PaginationResponse.fromPage(pageResponse),            // MetaData
+            null,                                         // Mensagem (ou passe uma string)
+            200                                        // Código de status
+            );
+        return ResponseEntity.ok(data);
     }
 }
 
