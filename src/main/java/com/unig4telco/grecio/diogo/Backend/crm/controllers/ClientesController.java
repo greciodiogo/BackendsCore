@@ -5,8 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.unig4telco.grecio.diogo.Backend.crm.DTO.*;
-import com.unig4telco.grecio.diogo.Backend.crm.controllers.DTO.ApiResponse;
-import com.unig4telco.grecio.diogo.Backend.crm.controllers.DTO.EnvelopeResponse;
+import com.unig4telco.grecio.diogo.Backend.crm.controllers.DTO.ApiResponseDTO;
 import com.unig4telco.grecio.diogo.Backend.crm.controllers.DTO.PaginationResponse;
 import com.unig4telco.grecio.diogo.Backend.crm.services.ClienteService;
 @RestController
@@ -16,67 +15,32 @@ public class ClientesController {
    private ClienteService clienteService;
     
     @GetMapping
-    public ResponseEntity<EnvelopeResponse<ApiResponse<ListClientesDTO>>> index(
-        @RequestParam(defaultValue = "1") int page,
-        @RequestParam(defaultValue = "5") int perPage,
-        @RequestParam(defaultValue = "id") String orderBy,
-        @RequestParam(defaultValue = "DESC") String typeOrderBy,
-        @RequestParam(defaultValue = "") String typeFilter,
-        @RequestParam(defaultValue = "") String search,
-        @RequestParam(defaultValue = "") String document,
-        @RequestParam(defaultValue = "") String status,
-        @RequestParam(defaultValue = "") String estadoRegisto,
-        @RequestParam(defaultValue = "") String typeClientId,
-        @RequestParam(defaultValue = "") String tipoConta,
-        @RequestParam(defaultValue = "") String typeRegistoCliente,
-        @RequestParam(defaultValue = "") String paisId,
-        @RequestParam(defaultValue = "") String provinciaId,
-        @RequestParam(defaultValue = "") String municipioId
-        ) {
+    public ResponseEntity<ApiResponseDTO<ListClientesDTO>> index( RequestClientListDTO filters) {
     
-        var pageResponse = clienteService.findAll(page, perPage, typeClientId, document, estadoRegisto, search);
-    
-        // Criação da resposta com paginação
-        var apiResponse = new ApiResponse<>(
-            pageResponse.getContent(),                        // Dados paginados
-            PaginationResponse.fromPage(pageResponse)         // Detalhes de paginação
-        );
+        var pageResponse = clienteService.findAll(filters);
 
-        var envelopeResponse = new EnvelopeResponse<>(
-            apiResponse,          // Dados dentro da chave "data"
-            "",                // Mensagem
-            200                  // Result, caso precise adicionar algo no futuro
-        );
-    
-        return ResponseEntity.ok(envelopeResponse);
+        ApiResponseDTO<ListClientesDTO> data = new ApiResponseDTO<>(
+            pageResponse.getContent(),                            // Dados paginados
+            PaginationResponse.fromPage(pageResponse),            // MetaData
+            null,                                         // Mensagem (ou passe uma string)
+            200                                        // Código de status
+            );
+        return ResponseEntity.ok(data);
     }
 
     @GetMapping("/birthday")
-    public ResponseEntity<EnvelopeResponse<ApiResponse<BirthdayPersonList>>> findBirthdayPerson(
-        @RequestParam(defaultValue = "1") int page,
-        @RequestParam(defaultValue = "5") int perPage,
-        @RequestParam(defaultValue = "id") String orderBy,
-        @RequestParam(defaultValue = "DESC") String typeOrderBy,
-        @RequestParam(defaultValue = "") String typeFilter,
-        @RequestParam(defaultValue = "") String search,
-        @RequestParam(defaultValue = "") String mes,
-        @RequestParam(defaultValue = "") String tipoClienteId,
-        @RequestParam(defaultValue = "") String dataAniversario
-        ) {
-        var pageResponse = clienteService.findBirthdayPerson(page, perPage, tipoClienteId, mes, dataAniversario, search);
+    public ResponseEntity<ApiResponseDTO<BirthdayPersonList>> findBirthdayPerson(
+        RequestBirthDayListDTO filters) {
+        var pageResponse = clienteService.findBirthdayPerson(filters);
     
-        var apiResponse = new ApiResponse<>(
-            pageResponse.getContent(),                        // Dados paginados
-            PaginationResponse.fromPage(pageResponse)         // Detalhes de paginação
-        );
-
-        var envelopeResponse = new EnvelopeResponse<>(
-            apiResponse,          // Dados dentro da chave "data"
-            "",                // Mensagem
-            200                  // Result, caso precise adicionar algo no futuro
-        );
+        ApiResponseDTO<BirthdayPersonList> data = new ApiResponseDTO<>(
+            pageResponse.getContent(),                            // Dados paginados
+            PaginationResponse.fromPage(pageResponse),            // MetaData
+            null,                                         // Mensagem (ou passe uma string)
+            200                                        // Código de status
+            );
     
-        return ResponseEntity.ok(envelopeResponse);
+        return ResponseEntity.ok(data);
     }
 
 }

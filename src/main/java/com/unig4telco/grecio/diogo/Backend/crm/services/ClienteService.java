@@ -12,6 +12,8 @@ import java.time.format.DateTimeFormatter;
 
 import com.unig4telco.grecio.diogo.Backend.crm.DTO.BirthdayPersonList;
 import com.unig4telco.grecio.diogo.Backend.crm.DTO.ListClientesDTO;
+import com.unig4telco.grecio.diogo.Backend.crm.DTO.RequestBirthDayListDTO;
+import com.unig4telco.grecio.diogo.Backend.crm.DTO.RequestClientListDTO;
 import com.unig4telco.grecio.diogo.Backend.crm.domain.Clientes;
 import com.unig4telco.grecio.diogo.Backend.crm.repositories.ClienteRepository;
 
@@ -20,29 +22,28 @@ public class ClienteService {
     @Autowired
     private ClienteRepository clienteRepository;
 
-    public Page<ListClientesDTO> findAll(int page, int perPage, String typeClientId, String document,
-            String estadoRegisto, String search) {
-        Pageable pageable = PageRequest.of(page - 1, perPage);
+    public Page<ListClientesDTO> findAll(RequestClientListDTO filters) {
+        Pageable pageable = PageRequest.of(filters.page() - 1, filters.perPage());
 
         Specification<Clientes> spec = Specification.where(null);
 
-        if (!typeClientId.isEmpty()) {
+        if (!filters.typeClientId().isEmpty()) {
             spec = spec.and(
-                    (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("tipo_cliente_id"), typeClientId));
+                    (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("tipo_cliente_id"), filters.typeClientId()));
         }
 
-        if (!document.isEmpty()) {
+        if (!filters.document().isEmpty()) {
             spec = spec.and((root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("aprovacao_documentacao"),
-                    "%" + document + "%"));
+                    "%" + filters.document() + "%"));
         }
 
-        if (!estadoRegisto.isEmpty()) {
-            spec = spec.and((root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("estado"), estadoRegisto));
+        if (!filters.estadoRegisto().isEmpty()) {
+            spec = spec.and((root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("estado"), filters.estadoRegisto()));
         }
 
-        if (!search.isEmpty()) {
+        if (!filters.search().isEmpty()) {
             spec = spec
-                    .and((root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("nome"), "%" + search + "%"));
+                    .and((root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("nome"), "%" + filters.search() + "%"));
         }
 
         Page<Clientes> data = clienteRepository.findAll(spec, pageable);
@@ -50,39 +51,38 @@ public class ClienteService {
         return data.map(ListClientesDTO::new);
     }
 
-    public Page<BirthdayPersonList> findBirthdayPerson(int page, int perPage, String typeClientId, String mes,
-            String dateBirth, String search) {
-        Pageable pageable = PageRequest.of(page - 1, perPage);
+    public Page<BirthdayPersonList> findBirthdayPerson(RequestBirthDayListDTO filters) {
+        Pageable pageable = PageRequest.of(filters.page() - 1, filters.perPage());
 
         Specification<Clientes> spec = Specification.where(null);
 
-        if (!typeClientId.isEmpty()) {
+        if (!filters.tipoClienteId().isEmpty()) {
             spec = spec.and(
-                    (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("tipo_cliente_id"), typeClientId));
+                    (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("tipo_cliente_id"), filters.tipoClienteId()));
         }
 
-        if (!mes.isEmpty()) {
+        if (!filters.mes().isEmpty()) {
             spec = spec.and((root, query, criteriaBuilder) -> {
                 // Extrai o mês da data de nascimento usando a função MONTH do SQL
-                Integer monthValue = Integer.parseInt(mes);
+                Integer monthValue = Integer.parseInt(filters.mes());
                 return criteriaBuilder.equal(criteriaBuilder.function("MONTH", Integer.class, root.get("dataNascimento")), monthValue);
             });            
         }
   
-        if (!dateBirth.isEmpty()) {
+        if (!filters.dataAniversario().isEmpty()) {
             spec = spec.and((root, query, criteriaBuilder) -> {
                 // Converte o parâmetro de data (String) para LocalDate
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                LocalDate parsedDate = LocalDate.parse(dateBirth, formatter);
+                LocalDate parsedDate = LocalDate.parse(filters.dataAniversario(), formatter);
                 
                 // Compara a data de nascimento completa
                 return criteriaBuilder.equal(root.get("dataNascimento"), parsedDate);
             });
         }
         
-        if (!search.isEmpty()) {
+        if (!filters.search().isEmpty()) {
             spec = spec
-                    .and((root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("nome"), "%" + search + "%"));
+                    .and((root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("nome"), "%" + filters.search() + "%"));
         }
 
         Page<Clientes> data = clienteRepository.findAll(spec, pageable);
