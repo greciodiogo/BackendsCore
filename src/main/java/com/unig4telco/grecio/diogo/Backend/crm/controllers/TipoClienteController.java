@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.unig4telco.grecio.diogo.Backend.crm.DTO.TipoAnexoClienteDTO;
 import com.unig4telco.grecio.diogo.Backend.crm.DTO.TipoClienteDTO;
-import com.unig4telco.grecio.diogo.Backend.crm.domain.TipoAnexoCliente;
+import com.unig4telco.grecio.diogo.Backend.crm.controllers.DTO.ApiResponseDTO;
+import com.unig4telco.grecio.diogo.Backend.crm.controllers.DTO.PaginationResponse;
 import com.unig4telco.grecio.diogo.Backend.crm.repositories.TipoClienteRepository;
 import com.unig4telco.grecio.diogo.Backend.crm.services.TipoAnexoClienteService;
 
@@ -29,9 +31,17 @@ public class TipoClienteController {
         return ResponseEntity.ok(lista);
     }
 
-       @GetMapping("/tipoAnexoClientes")
-    public ResponseEntity<List<TipoAnexoCliente>> findAll() {
-        List<TipoAnexoCliente> lista = tipoAnexoClienteService.findAll();
-        return ResponseEntity.ok(lista);
+    @GetMapping("/tipoAnexoClientes")
+    public ResponseEntity<ApiResponseDTO<TipoAnexoClienteDTO>> index() {
+    
+        var pageResponse = tipoAnexoClienteService.findAll();
+
+        ApiResponseDTO<TipoAnexoClienteDTO> data = new ApiResponseDTO<>(
+            pageResponse.getContent(),                            // Dados paginados
+            PaginationResponse.fromPage(pageResponse),            // MetaData
+            null,                                         // Mensagem (ou passe uma string)
+            200                                        // Código de status
+            );
+        return ResponseEntity.ok(data);
     }
 }
