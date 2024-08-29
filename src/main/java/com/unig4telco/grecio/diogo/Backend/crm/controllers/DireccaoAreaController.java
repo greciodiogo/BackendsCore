@@ -2,8 +2,10 @@ package com.unig4telco.grecio.diogo.Backend.crm.controllers;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
-import com.unig4telco.grecio.diogo.Backend.crm.domain.DireccaoArea;
+
+import com.unig4telco.grecio.diogo.Backend.crm.DTO.DireccaoAreaDTO;
+import com.unig4telco.grecio.diogo.Backend.crm.controllers.DTO.ApiResponseDTO;
+import com.unig4telco.grecio.diogo.Backend.crm.controllers.DTO.PaginationResponse;
 import com.unig4telco.grecio.diogo.Backend.crm.services.DireccaoAreaService;
 
 @RestController
@@ -15,10 +17,18 @@ public class DireccaoAreaController {
     public DireccaoAreaController(DireccaoAreaService direccaoareaService) {
         this.direccaoareaService = direccaoareaService;
     }
-
+    
     @GetMapping
-    public ResponseEntity<List<DireccaoArea>> findAll() {
-        List<DireccaoArea> lista = direccaoareaService.findAll();
-        return ResponseEntity.ok(lista);
+    public ResponseEntity<ApiResponseDTO<DireccaoAreaDTO>> index() {
+    
+        var pageResponse = direccaoareaService.findAll();
+
+        ApiResponseDTO<DireccaoAreaDTO> data = new ApiResponseDTO<>(
+            pageResponse.getContent(),                            // Dados paginados
+            PaginationResponse.fromPage(pageResponse),            // MetaData
+            null,                                         // Mensagem (ou passe uma string)
+            200                                        // Código de status
+            );
+        return ResponseEntity.ok(data);
     }
 }
