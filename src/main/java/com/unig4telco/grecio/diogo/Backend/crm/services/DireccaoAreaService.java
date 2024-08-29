@@ -1,7 +1,12 @@
 package com.unig4telco.grecio.diogo.Backend.crm.services;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import java.util.List;
+
+import com.unig4telco.grecio.diogo.Backend.crm.DTO.DireccaoAreaDTO;
 import com.unig4telco.grecio.diogo.Backend.crm.domain.DireccaoArea;
 import com.unig4telco.grecio.diogo.Backend.crm.repositories.DireccaoAreaRepository;
 
@@ -14,7 +19,11 @@ public class DireccaoAreaService {
         this.direccaoareaRepository = direccaoareaRepository;
     }
 
-    public List<DireccaoArea> findAll() {
-        return direccaoareaRepository.findAll();
+        public Page<DireccaoAreaDTO> findAll() {
+        Pageable pageable = PageRequest.of(1, 5);
+        Specification<DireccaoArea> spec = Specification.where(null);
+        Page<DireccaoArea> data = direccaoareaRepository.findAll(spec, pageable);
+
+        return data.map(DireccaoAreaDTO::new);
     }
 }

@@ -1,7 +1,12 @@
 package com.unig4telco.grecio.diogo.Backend.crm.services;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import java.util.List;
+
+import com.unig4telco.grecio.diogo.Backend.crm.DTO.TipoAnexoClienteDTO;
 import com.unig4telco.grecio.diogo.Backend.crm.domain.TipoAnexoCliente;
 import com.unig4telco.grecio.diogo.Backend.crm.repositories.TipoAnexoClienteRepository;
 
@@ -13,8 +18,11 @@ public class TipoAnexoClienteService {
     public TipoAnexoClienteService(TipoAnexoClienteRepository tipoanexoclienteRepository) {
         this.tipoanexoclienteRepository = tipoanexoclienteRepository;
     }
+    public Page<TipoAnexoClienteDTO> findAll() {
+        Pageable pageable = PageRequest.of(1, 5);
+        Specification<TipoAnexoCliente> spec = Specification.where(null);
+        Page<TipoAnexoCliente> data = tipoanexoclienteRepository.findAll(spec, pageable);
 
-    public List<TipoAnexoCliente> findAll() {
-        return tipoanexoclienteRepository.findAll();
+        return data.map(TipoAnexoClienteDTO::new);
     }
 }

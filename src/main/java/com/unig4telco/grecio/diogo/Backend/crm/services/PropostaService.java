@@ -1,7 +1,12 @@
 package com.unig4telco.grecio.diogo.Backend.crm.services;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import java.util.List;
+
+import com.unig4telco.grecio.diogo.Backend.crm.DTO.PropostaDTO;
 import com.unig4telco.grecio.diogo.Backend.crm.domain.Proposta;
 import com.unig4telco.grecio.diogo.Backend.crm.repositories.PropostaRepository;
 
@@ -14,7 +19,11 @@ public class PropostaService {
         this.propostaRepository = propostaRepository;
     }
 
-    public List<Proposta> findAll() {
-        return propostaRepository.findAll();
+     public Page<PropostaDTO> findAll() {
+        Pageable pageable = PageRequest.of(1, 5);
+        Specification<Proposta> spec = Specification.where(null);
+        Page<Proposta> data = propostaRepository.findAll(spec, pageable);
+
+        return data.map(PropostaDTO::new);
     }
 }
