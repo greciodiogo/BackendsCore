@@ -3,10 +3,10 @@ package com.unig4telco.grecio.diogo.Backend.Modules.configs.direccao.direccaoAre
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.unig4telco.grecio.diogo.Backend.Helpers.ApiResponseDTO;
+import com.unig4telco.grecio.diogo.Backend.Helpers.PaginationResponse;
 import com.unig4telco.grecio.diogo.Backend.Modules.configs.direccao._services.DireccaoAreaService;
 import com.unig4telco.grecio.diogo.Backend.Modules.configs.direccao.direccaoAreaListar.DTO.DireccaoAreaDTO;
-import com.unig4telco.grecio.diogo.Backend.Modules.crm._controllers.DTO.ApiResponseDTO;
-import com.unig4telco.grecio.diogo.Backend.Modules.crm._controllers.DTO.PaginationResponse;
 
 @RestController
 @RequestMapping("/direccao_areas")

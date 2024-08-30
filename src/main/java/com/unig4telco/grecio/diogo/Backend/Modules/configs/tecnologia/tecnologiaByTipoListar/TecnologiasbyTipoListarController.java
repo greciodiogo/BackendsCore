@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.unig4telco.grecio.diogo.Backend.Helpers.ApiResponseDTO;
+import com.unig4telco.grecio.diogo.Backend.Helpers.PaginationResponse;
 import com.unig4telco.grecio.diogo.Backend.Modules.configs.tecnologia._services.TecnologiaService;
 import com.unig4telco.grecio.diogo.Backend.Modules.configs.tecnologia.tecnologiaListar.DTO.TecnologiaDTO;
-import com.unig4telco.grecio.diogo.Backend.Modules.crm._controllers.DTO.ApiResponseDTO;
-import com.unig4telco.grecio.diogo.Backend.Modules.crm._controllers.DTO.PaginationResponse;
 
 @RestController
 @RequestMapping("/tecnologias")
