@@ -3,8 +3,8 @@ package com.unig4telco.grecio.diogo.Backend.Modules.crm.clientes.clienteAniversa
 import org.springframework.web.bind.annotation.RequestParam;
 
 public record RequestBirthDayListDTO(
-    @RequestParam(defaultValue = "1") int page,
-    @RequestParam(defaultValue = "5") int perPage,
+    @RequestParam(defaultValue = "1") Integer page,
+    @RequestParam(defaultValue = "5") Integer perPage,
     @RequestParam(defaultValue = "id") String orderBy,
     @RequestParam(defaultValue = "DESC") String typeOrderBy,
     @RequestParam(defaultValue = "") String typeFilter,

@@ -3,11 +3,12 @@ package com.unig4telco.grecio.diogo.Backend.Modules.crm.clientes.clienteListar.D
 import org.springframework.web.bind.annotation.RequestParam;
 
 public record RequestClientListDTO(
-        @RequestParam(defaultValue = "1") int page,
-        @RequestParam(defaultValue = "5") int perPage,
+        @RequestParam(defaultValue = "1") Integer page,
+        @RequestParam(defaultValue = "5") Integer perPage,
         @RequestParam(defaultValue = "id") String orderBy,
         @RequestParam(defaultValue = "DESC") String typeOrderBy,
         @RequestParam(defaultValue = "") String typeFilter,
+        @RequestParam(defaultValue = "") String estado,
         @RequestParam(defaultValue = "") String search,
         @RequestParam(defaultValue = "") String document,
         @RequestParam(defaultValue = "") String status,
