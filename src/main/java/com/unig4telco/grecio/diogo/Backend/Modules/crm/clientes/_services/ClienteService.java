@@ -23,28 +23,45 @@ public class ClienteService {
     private ClienteRepository clienteRepository;
 
     public Page<ListClientesDTO> findAll(RequestClientListDTO filters) {
-        Pageable pageable = PageRequest.of(filters.page() - 1, filters.perPage());
+        int page = (filters.page() != null) ? filters.page() : 1;
+        int perPage = (filters.perPage() != null) ? filters.perPage() : 5;
+        
+        Pageable pageable = PageRequest.of(page - 1, perPage);
 
         Specification<Clientes> spec = Specification.where(null);
 
-        if (!filters.typeClientId().isEmpty()) {
+        if (filters.typeClientId() != null && !filters.typeClientId().isEmpty()) {
             spec = spec.and(
                     (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("tipo_cliente_id"), filters.typeClientId()));
         }
 
-        if (!filters.document().isEmpty()) {
+        if (filters.document() != null && !filters.document().isEmpty()) {
             spec = spec.and((root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("aprovacao_documentacao"),
                     "%" + filters.document() + "%"));
         }
 
-        if (!filters.estadoRegisto().isEmpty()) {
+        if (filters.estadoRegisto() != null && !filters.estadoRegisto().isEmpty()) {
             spec = spec.and((root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("estado"), filters.estadoRegisto()));
         }
 
-        if (!filters.search().isEmpty()) {
+        if (filters.search() != null && !filters.search().isEmpty()) {
             spec = spec
                     .and((root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("nome"), "%" + filters.search() + "%"));
         }
+
+                // Adicionando a condição de whereIn para o campo "estado"
+        if (filters.estado() != null) {
+            spec = spec.and((root, query, criteriaBuilder) -> {
+                String estado = filters.estado();
+                if ("2".equals(estado)) {
+                    return criteriaBuilder.in(root.get("estado")).value("2");
+                } else {
+                    System.out.println("outros"+ estado);
+                    return criteriaBuilder.equal(root.get("estado"), estado);
+                }
+            });
+        }
+
 
         Page<Clientes> data = clienteRepository.findAll(spec, pageable);
 
@@ -52,16 +69,18 @@ public class ClienteService {
     }
 
     public Page<BirthdayPersonList> findBirthdayPerson(RequestBirthDayListDTO filters) {
-        Pageable pageable = PageRequest.of(filters.page() - 1, filters.perPage());
-
+        int page = (filters.page() != null) ? filters.page() : 1;
+        int perPage = (filters.perPage() != null) ? filters.perPage() : 5;
+        
+        Pageable pageable = PageRequest.of(page - 1, perPage);
         Specification<Clientes> spec = Specification.where(null);
 
-        if (!filters.tipoClienteId().isEmpty()) {
+        if (filters.tipoClienteId() != null && !filters.tipoClienteId().isEmpty()){
             spec = spec.and(
                     (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("tipo_cliente_id"), filters.tipoClienteId()));
         }
 
-        if (!filters.mes().isEmpty()) {
+        if (filters.mes() != null && !filters.mes().isEmpty()) {
             spec = spec.and((root, query, criteriaBuilder) -> {
                 // Extrai o mês da data de nascimento usando a função MONTH do SQL
                 Integer monthValue = Integer.parseInt(filters.mes());
@@ -69,7 +88,7 @@ public class ClienteService {
             });            
         }
   
-        if (!filters.dataAniversario().isEmpty()) {
+        if (filters.dataAniversario() != null && !filters.dataAniversario().isEmpty()) {
             spec = spec.and((root, query, criteriaBuilder) -> {
                 // Converte o parâmetro de data (String) para LocalDate
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -80,7 +99,7 @@ public class ClienteService {
             });
         }
         
-        if (!filters.search().isEmpty()) {
+        if (filters.search() != null && !filters.search().isEmpty()) {
             spec = spec
                     .and((root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("nome"), "%" + filters.search() + "%"));
         }
