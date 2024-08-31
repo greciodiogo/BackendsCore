@@ -28,5 +28,4 @@ public class Role {
         inverseJoinColumns = @JoinColumn(name = "permission_id")
     )
     private List<Permission> permissions;
-
 }
