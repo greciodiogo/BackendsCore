@@ -10,17 +10,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 
 import com.unig4telco.grecio.diogo.Backend.Helpers.ApiResponseDTO;
-import com.unig4telco.grecio.diogo.Backend.Helpers.EnvelopeResponse;
 import com.unig4telco.grecio.diogo.Backend.Helpers.PaginationResponse;
 import com.unig4telco.grecio.diogo.Backend.Modules.crm.clientes._domain.TipoAnexoCliente;
 import com.unig4telco.grecio.diogo.Backend.Modules.crm.clientes.tipoAnexoClienteListar.DTO.TipoAnexoClienteDTO;
 import com.unig4telco.grecio.diogo.Backend.Modules.gestaodocumental.anexo._repositories.TipoAnexoClienteRepository;
 
 @RestController
-@RequestMapping("/tipo_clientes")
+@RequestMapping
 public class TipoAnexoClienteListarController {
 
     @Autowired
@@ -44,15 +42,15 @@ public class TipoAnexoClienteListarController {
         return ResponseEntity.ok(data);
     }
 
-    @GetMapping("/form/getTypesIdentities")
-    public ResponseEntity<EnvelopeResponse<List<TipoAnexoClienteDTO>>> getTypesIdentities() {
+    // @GetMapping("/form/getTypesIdentities")
+    // public ResponseEntity<EnvelopeResponse<List<TipoAnexoClienteDTO>>> getTypesIdentities() {
 
-        List<TipoAnexoClienteDTO> data = tipoAnexoClienteRepository.findAll().stream()
-                .map(TipoAnexoClienteDTO::new)
-                .toList();
+    //     List<TipoAnexoClienteDTO> data = tipoAnexoClienteRepository.findAll().stream()
+    //             .map(TipoAnexoClienteDTO::new)
+    //             .toList();
 
-        // Converta a saída para EnvelopeResponse<List<MoedaDTO>>
-        EnvelopeResponse<List<TipoAnexoClienteDTO>> response = new EnvelopeResponse<>(data, null, null);
-        return ResponseEntity.ok(response);
-    }
+    //     // Converta a saída para EnvelopeResponse<List<MoedaDTO>>
+    //     EnvelopeResponse<List<TipoAnexoClienteDTO>> response = new EnvelopeResponse<>(data, null, null);
+    //     return ResponseEntity.ok(response);
+    // }
 }

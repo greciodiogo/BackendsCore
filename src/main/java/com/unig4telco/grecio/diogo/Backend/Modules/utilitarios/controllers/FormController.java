@@ -74,7 +74,7 @@ public class FormController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/documentos")
+    @GetMapping("/getDocumentos")
     public ResponseEntity<EnvelopeResponse<List<DocumentoDTO>>> getDocumentos() {
 
         List<DocumentoDTO> data = documentoRepository.findAll().stream()
