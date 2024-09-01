@@ -18,7 +18,9 @@ public class EntidadeCativadora {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nome;
-    private Integer cliente_id;
+    @ManyToOne
+    @JoinColumn(name="cliente_id", referencedColumnName = "id")
+    private Clientes cliente;
     private Integer valor;
     @Column(name="is_actived")
     private Boolean isActived;

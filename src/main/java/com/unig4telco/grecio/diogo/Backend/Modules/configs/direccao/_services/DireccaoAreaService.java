@@ -20,7 +20,7 @@ public class DireccaoAreaService {
     }
 
         public Page<DireccaoAreaDTO> findAll() {
-        Pageable pageable = PageRequest.of(1, 5);
+        Pageable pageable = PageRequest.of(0, 5);
         Specification<DireccaoArea> spec = Specification.where(null);
         Page<DireccaoArea> data = direccaoareaRepository.findAll(spec, pageable);
 

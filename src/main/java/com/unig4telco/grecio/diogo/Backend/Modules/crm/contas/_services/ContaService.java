@@ -20,7 +20,7 @@ public class ContaService {
     }
 
     public Page<ContaDTO> findAll() {
-        Pageable pageable = PageRequest.of(1, 5);
+        Pageable pageable = PageRequest.of(0, 5);
         Specification<Conta> spec = Specification.where(null);
         Page<Conta> data = contaRepository.findAll(spec, pageable);
 

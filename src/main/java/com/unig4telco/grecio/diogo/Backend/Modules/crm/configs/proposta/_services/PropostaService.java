@@ -20,7 +20,7 @@ public class PropostaService {
     }
 
      public Page<PropostaDTO> findAll() {
-        Pageable pageable = PageRequest.of(1, 5);
+        Pageable pageable = PageRequest.of(0, 5);
         Specification<Proposta> spec = Specification.where(null);
         Page<Proposta> data = propostaRepository.findAll(spec, pageable);
 
