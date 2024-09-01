@@ -48,15 +48,13 @@ public class ClienteService {
             spec = spec
                     .and((root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("nome"), "%" + filters.search() + "%"));
         }
-
-                // Adicionando a condição de whereIn para o campo "estado"
-        if (filters.estado() != null) {
+        // Adicionando a condição de whereIn para o campo "estado"
+        if (filters.status() != null) {
             spec = spec.and((root, query, criteriaBuilder) -> {
-                String estado = filters.estado();
+                String estado = filters.status();
                 if ("2".equals(estado)) {
                     return criteriaBuilder.in(root.get("estado")).value("2");
                 } else {
-                    System.out.println("outros"+ estado);
                     return criteriaBuilder.equal(root.get("estado"), estado);
                 }
             });
