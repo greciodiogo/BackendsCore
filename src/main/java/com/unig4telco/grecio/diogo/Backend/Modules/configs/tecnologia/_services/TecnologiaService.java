@@ -1,5 +1,7 @@
 package com.unig4telco.grecio.diogo.Backend.Modules.configs.tecnologia._services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,7 +20,7 @@ public class TecnologiaService {
     
     public Page<TecnologiaDTO> findAll() {
         
-        Pageable pageable = PageRequest.of(1, 5);
+        Pageable pageable = PageRequest.of(0, 5);
          Specification<Tecnologia> spec = Specification.where(null);
 
             Page<Tecnologia> data = tecnologiaRepository.findAll(spec, pageable);
@@ -26,12 +28,16 @@ public class TecnologiaService {
         return data.map(TecnologiaDTO::new);
     }
 
-    public Page<TecnologiaDTO> findByTipoFacturacao(String tipoFacturacao) {
-        Pageable pageable = PageRequest.of(1, 5);
+    public List<TecnologiaDTO> findByTipoFacturacao(String tipoFacturacao) {
         Specification<Tecnologia> spec = Specification.where(null);
+        if (tipoFacturacao != null && tipoFacturacao.isEmpty()) {
+            spec = spec.and(
+                    (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("tipoFacturacao"), tipoFacturacao));
+        }
+           List<TecnologiaDTO> data = tecnologiaRepository.findAll(spec).stream()
+                  .map(TecnologiaDTO::new)
+                .toList();
 
-           Page<Tecnologia> data = tecnologiaRepository.findByTipoFacturacao(spec, pageable, tipoFacturacao);
-
-       return data.map(TecnologiaDTO::new);
+       return data;
     }
 }

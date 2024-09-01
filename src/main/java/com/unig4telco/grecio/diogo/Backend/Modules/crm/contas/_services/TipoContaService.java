@@ -20,7 +20,7 @@ public class TipoContaService {
     }
 
     public Page<TipoContaDTO> findAll() {
-        Pageable pageable = PageRequest.of(1, 5);
+        Pageable pageable = PageRequest.of(0, 5);
         Specification<TipoConta> spec = Specification.where(null);
         Page<TipoConta> data = tipocontaRepository.findAll(spec, pageable);
 
