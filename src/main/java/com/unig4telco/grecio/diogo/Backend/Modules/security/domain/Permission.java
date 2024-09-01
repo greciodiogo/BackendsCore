@@ -1,6 +1,5 @@
 package com.unig4telco.grecio.diogo.Backend.Modules.security.domain;
 
-import java.util.List;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -20,6 +19,6 @@ public class Permission {
     private String slug;
     private Boolean is_deleted;
 
-    @ManyToMany(mappedBy = "permissions")
-    private List<Role> roles;
+    // @ManyToMany(mappedBy = "permissions")
+    // private List<Role> roles;
 }

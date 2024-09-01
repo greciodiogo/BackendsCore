@@ -24,14 +24,14 @@ public class SecurityConfig {
     @Bean
     public DefaultSecurityFilterChain configure(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // Desativando CSRF. Certifique-se de que é necessário.
-                .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Sem sessão (útil para APIs RESTful)
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.POST, "/auth/login").permitAll() // Permitir POST em /login
-                        .requestMatchers(HttpMethod.GET, "/api/**").authenticated() // Permitir qualquer outra rota após a autenticação
-                        .anyRequest().authenticated()) // Qualquer outra requisição deve ser autenticada
-                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class); // Adicionando filtro customizado
+                .csrf(csrf -> csrf.disable()); // Desativando CSRF. Certifique-se de que é necessário.
+                // .sessionManagement(session -> session
+                //         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Sem sessão (útil para APIs RESTful)
+                // .authorizeHttpRequests(auth -> auth
+                //         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll() // Permitir POST em /login
+                //         .requestMatchers(HttpMethod.GET, "/api/**").authenticated()); // Permitir qualquer outra rota após a autenticação
+                //         // .anyRequest().authenticated()) // Qualquer outra requisição deve ser autenticada
+                // // .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class); // Adicionando filtro customizado
 
         return http.build();
     }

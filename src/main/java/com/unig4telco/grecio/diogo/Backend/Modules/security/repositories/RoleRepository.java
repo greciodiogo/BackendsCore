@@ -1,10 +1,17 @@
 package com.unig4telco.grecio.diogo.Backend.Modules.security.repositories;
 
-import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.unig4telco.grecio.diogo.Backend.Modules.security.domain.Role;
 
 public interface RoleRepository extends JpaRepository<Role, Integer>{
-    List<Role> findByUsers_Id(Integer id);
+    @Query(
+      value = "SELECT r.* FROM roles r " +
+              "JOIN role_user ru ON r.id = ru.role_id " +
+              "WHERE ru.user_id = :userId", 
+      nativeQuery = true
+    )
+    Role findByUserId(@Param("userId") Integer userId);
 }
