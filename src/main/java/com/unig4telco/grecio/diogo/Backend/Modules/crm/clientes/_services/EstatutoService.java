@@ -20,7 +20,7 @@ public class EstatutoService {
     }
 
      public Page<EstatutoDTO> findAll() {
-        Pageable pageable = PageRequest.of(1, 5);
+        Pageable pageable = PageRequest.of(0, 5);
         Specification<Estatuto> spec = Specification.where(null);
         Page<Estatuto> data = estatutoRepository.findAll(spec, pageable);
 

@@ -10,7 +10,7 @@ import com.unig4telco.grecio.diogo.Backend.Modules.crm.clientes._services.Estatu
 import com.unig4telco.grecio.diogo.Backend.Modules.crm.clientes.clienteEstatutoListar.DTO.EstatutoDTO;
 
 @RestController
-@RequestMapping("/estatutos")
+@RequestMapping("/estatuto")
 public class ClienteEstatutoListarController {
     @Autowired
     private EstatutoService estatutoService;
