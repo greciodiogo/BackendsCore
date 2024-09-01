@@ -19,7 +19,7 @@ public class EstatutoEscalaoListarController {
     private EstatutoEscalaoRepository estatutoEscalaoRepository;
 
     @GetMapping("/getEscalaoCategoria")
-    public <T> ResponseEntity<EnvelopeResponse<List<EstatutoEscalao>>> getTypesClient(String status) {
+    public <T> ResponseEntity<EnvelopeResponse<List<EstatutoEscalao>>> getEscalaoCategoria(String status) {
         // Obtenha a lista de EstatutoEscalao
         List<EstatutoEscalao> data = estatutoEscalaoRepository.findByStatus(true);
         // Converta a saída para EnvelopeResponse<List<EstatutoEscalao>>
