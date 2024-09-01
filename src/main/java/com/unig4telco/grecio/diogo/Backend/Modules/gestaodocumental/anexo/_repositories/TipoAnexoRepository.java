@@ -9,4 +9,6 @@ import com.unig4telco.grecio.diogo.Backend.Modules.gestaodocumental.anexo._domai
 
 public interface TipoAnexoRepository extends JpaRepository<TipoAnexo, Long>, JpaSpecificationExecutor<TipoAnexo> {
     List<TipoAnexo> findByTipoBancarioTrue();
+
+    List<TipoAnexo> findByArea(String area);
 }

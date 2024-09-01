@@ -20,4 +20,8 @@ public class TipoAnexoService {
     public List<TipoAnexo> typeAnexoBancario() {
         return tipoAnexoRepository.findByTipoBancarioTrue();
     }
+
+    public List<TipoAnexo> findByArea(String area) {
+        return tipoAnexoRepository.findByArea(area);
+    }
 }

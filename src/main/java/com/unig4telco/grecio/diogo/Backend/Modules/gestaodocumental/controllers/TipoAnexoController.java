@@ -32,4 +32,14 @@ public class TipoAnexoController {
 
         return ResponseEntity.ok(tipoAnexos);
     }
+
+    @GetMapping("/getTipoAnexoByPedido")
+    public ResponseEntity<List<TipoAnexoDTO>> getTipoAnexoByPedido() {
+        List<TipoAnexoDTO> tipoAnexos = tipoAnexoService.findByArea("Pedido")
+                .stream()
+                .map(TipoAnexoDTO::new)
+                .toList();
+
+        return ResponseEntity.ok(tipoAnexos);
+    }
 }
