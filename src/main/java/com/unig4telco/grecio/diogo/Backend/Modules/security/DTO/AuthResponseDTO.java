@@ -10,14 +10,16 @@ public record AuthResponseDTO<T>(
         Token<T> token,
         User user,
         Role role,
-        List<Permission> permissions
+        List<Permission> permissions,
+        List<Permission> permissionFields
     ) {  
-        public AuthResponseDTO(String token, User user,Role role, List<Permission> permissions) {
+        public AuthResponseDTO(String token, User user,Role role, List<Permission> permissions, List<Permission> permissionFields) {
             this(
                 new Token<>("Bearer",token),
                 user, 
                 role,
-                permissions
+                permissions,
+                permissionFields
                 );
         }
     
