@@ -3,34 +3,20 @@ package com.unig4telco.grecio.diogo.Backend.Modules.utilitarios.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.unig4telco.grecio.diogo.Backend.Helpers.ApiResponseDTO;
-import com.unig4telco.grecio.diogo.Backend.Helpers.PaginationResponse;
-import com.unig4telco.grecio.diogo.Backend.Modules.crm.clientes._domain.TipoCliente;
+import com.unig4telco.grecio.diogo.Backend.Helpers.EnvelopeResponse;
 import com.unig4telco.grecio.diogo.Backend.Modules.crm.clientes._repositories.TipoClienteRepository;
 import com.unig4telco.grecio.diogo.Backend.Modules.crm.clientes.tipoClienteListar.DTO.TipoClienteDTO;
-import com.unig4telco.grecio.diogo.Backend.Modules.utilitarios.DTO.BancosListDTO;
 import com.unig4telco.grecio.diogo.Backend.Modules.utilitarios.DTO.CambioDTO;
 import com.unig4telco.grecio.diogo.Backend.Modules.utilitarios.DTO.DocumentoDTO;
 import com.unig4telco.grecio.diogo.Backend.Modules.utilitarios.DTO.MoedaDTO;
 import com.unig4telco.grecio.diogo.Backend.Modules.utilitarios.DTO.OrganismoDTO;
 import com.unig4telco.grecio.diogo.Backend.Modules.utilitarios.DTO.SerieDTO;
-import com.unig4telco.grecio.diogo.Backend.Modules.utilitarios.domain.Bancos;
-import com.unig4telco.grecio.diogo.Backend.Modules.utilitarios.domain.Cambio;
-import com.unig4telco.grecio.diogo.Backend.Modules.utilitarios.domain.Documento;
-import com.unig4telco.grecio.diogo.Backend.Modules.utilitarios.domain.Moeda;
-import com.unig4telco.grecio.diogo.Backend.Modules.utilitarios.domain.Organismo;
-import com.unig4telco.grecio.diogo.Backend.Modules.utilitarios.domain.Serie;
-import com.unig4telco.grecio.diogo.Backend.Modules.utilitarios.repositories.BancosRepository;
 import com.unig4telco.grecio.diogo.Backend.Modules.utilitarios.repositories.CambioRepository;
 import com.unig4telco.grecio.diogo.Backend.Modules.utilitarios.repositories.DocumentoRepository;
 import com.unig4telco.grecio.diogo.Backend.Modules.utilitarios.repositories.MoedaRepository;
@@ -40,8 +26,6 @@ import com.unig4telco.grecio.diogo.Backend.Modules.utilitarios.repositories.Seri
 @RestController
 @RequestMapping("/form")
 public class FormController {
-    @Autowired
-    private BancosRepository bancosRepository;
     @Autowired
     private MoedaRepository moedaRepository;
     @Autowired
@@ -55,139 +39,90 @@ public class FormController {
     @Autowired
     private TipoClienteRepository tipoClienteRepository;
 
-        @GetMapping("/bancos")
-    public ResponseEntity<ApiResponseDTO<BancosListDTO>> getBancos() {
-        Pageable pageable = PageRequest.of(1,5);
-        Specification<Bancos> spec = Specification.where(null);
-        Page<Bancos> bancos = bancosRepository.findAll(spec,pageable);
-        var pageResponse = bancos.map(BancosListDTO::new);
-        
-        ApiResponseDTO<BancosListDTO> data = new ApiResponseDTO<>(
-            pageResponse.getContent(),                            // Dados paginados
-            PaginationResponse.fromPage(pageResponse),            // MetaData
-            null,                                         // Mensagem (ou passe uma string)
-            200                                        // Código de status
-            );
-        return ResponseEntity.ok(data);
+    @GetMapping("/getMoedas")
+    public ResponseEntity<EnvelopeResponse<List<MoedaDTO>>> getMoeda() {
+        List<MoedaDTO> data = moedaRepository.findAll().stream()
+                .map(MoedaDTO::new)
+                .toList();
+
+        // Converta a saída para EnvelopeResponse<List<MoedaDTO>>
+        EnvelopeResponse<List<MoedaDTO>> response = new EnvelopeResponse<>(data, null, null);
+        return ResponseEntity.ok(response);
     }
 
-        @GetMapping("/moedas")
-    public ResponseEntity<ApiResponseDTO<MoedaDTO>> getMoeda() {
-        
-        Pageable pageable = PageRequest.of(1,5);
-        Specification<Moeda> spec = Specification.where(null);
-        Page<Moeda> moedas = moedaRepository.findAll(spec,pageable);
-        var pageResponse = moedas.map(MoedaDTO::new);
-    
-        ApiResponseDTO<MoedaDTO> data = new ApiResponseDTO<>(
-            pageResponse.getContent(),                            // Dados paginados
-            PaginationResponse.fromPage(pageResponse),            // MetaData
-            null,                                         // Mensagem (ou passe uma string)
-            200                                        // Código de status
-            );
-        return ResponseEntity.ok(data);
+    @GetMapping("/getOrganismos")
+    public ResponseEntity<EnvelopeResponse<List<OrganismoDTO>>> getOrganismo() {
+
+        List<OrganismoDTO> data = organismoRepository.findAll().stream()
+                .map(OrganismoDTO::new)
+                .toList();
+
+        // Converta a saída para EnvelopeResponse<List<OrganismoDTO>>
+        EnvelopeResponse<List<OrganismoDTO>> response = new EnvelopeResponse<>(data, null, null);
+        return ResponseEntity.ok(response);
     }
 
-        @GetMapping("/organismos")
-    public ResponseEntity<ApiResponseDTO<OrganismoDTO>> getOrganismo() {
-        
-        Pageable pageable = PageRequest.of(1,5);
-        Specification<Organismo> spec = Specification.where(null);
-        Page<Organismo> organismos = organismoRepository.findAll(spec,pageable);
-        var pageResponse = organismos.map(OrganismoDTO::new);
-        
-        ApiResponseDTO<OrganismoDTO> data = new ApiResponseDTO<>(
-            pageResponse.getContent(),                            // Dados paginados
-            PaginationResponse.fromPage(pageResponse),            // MetaData
-            null,                                         // Mensagem (ou passe uma string)
-            200                                        // Código de status
-            );
-        return ResponseEntity.ok(data);
+    @GetMapping("/cambios")
+    public ResponseEntity<EnvelopeResponse<List<CambioDTO>>> getCambios() {
+
+        List<CambioDTO> data = cambioRepository.findAll().stream()
+                .map(CambioDTO::new)
+                .toList();
+
+        // Converta a saída para EnvelopeResponse<List<CambioDTO>>
+        EnvelopeResponse<List<CambioDTO>> response = new EnvelopeResponse<>(data, null, null);
+        return ResponseEntity.ok(response);
     }
 
-        @GetMapping("/cambios")
-    public ResponseEntity<ApiResponseDTO<CambioDTO>> getCambios() {
-        
-        Pageable pageable = PageRequest.of(1,5);
-        Specification<Cambio> spec = Specification.where(null);
-        Page<Cambio> cambio = cambioRepository.findAll(spec,pageable);
-        var pageResponse = cambio.map(CambioDTO::new);
-        
-        ApiResponseDTO<CambioDTO> data = new ApiResponseDTO<>(
-            pageResponse.getContent(),                            // Dados paginados
-            PaginationResponse.fromPage(pageResponse),            // MetaData
-            null,                                         // Mensagem (ou passe uma string)
-            200                                        // Código de status
-            );
-        return ResponseEntity.ok(data);
+    @GetMapping("/documentos")
+    public ResponseEntity<EnvelopeResponse<List<DocumentoDTO>>> getDocumentos() {
+
+        List<DocumentoDTO> data = documentoRepository.findAll().stream()
+                .map(DocumentoDTO::new)
+                .toList();
+
+        // Converta a saída para EnvelopeResponse<List<DocumentoDTO>>
+        EnvelopeResponse<List<DocumentoDTO>> response = new EnvelopeResponse<>(data, null, null);
+        return ResponseEntity.ok(response);
     }
 
-        @GetMapping("/documentos")
-    public ResponseEntity<ApiResponseDTO<DocumentoDTO>> getDocumentos() {
-        
-        Pageable pageable = PageRequest.of(1,5);
-        Specification<Documento> spec = Specification.where(null);
-        Page<Documento> documentos = documentoRepository.findAll(spec,pageable);
-        var pageResponse = documentos.map(DocumentoDTO::new);
-        
-        ApiResponseDTO<DocumentoDTO> data = new ApiResponseDTO<>(
-            pageResponse.getContent(),                            // Dados paginados
-            PaginationResponse.fromPage(pageResponse),            // MetaData
-            null,                                         // Mensagem (ou passe uma string)
-            200                                        // Código de status
-            );
-        return ResponseEntity.ok(data);
+    @GetMapping("/series")
+    public ResponseEntity<EnvelopeResponse<List<SerieDTO>>> getSeries() {
+        List<SerieDTO> data = serieRepository.findAll().stream()
+                .map(SerieDTO::new)
+                .toList();
+
+        // Converta a saída para EnvelopeResponse<List<SerieDTO>>
+        EnvelopeResponse<List<SerieDTO>> response = new EnvelopeResponse<>(data, null, null);
+        return ResponseEntity.ok(response);
     }
 
-        @GetMapping("/series")
-    public ResponseEntity<ApiResponseDTO<SerieDTO>> getSeries() {
-        
-        Pageable pageable = PageRequest.of(1,5);
-        Specification<Serie> spec = Specification.where(null);
-        Page<Serie> serie = serieRepository.findAll(spec,pageable);
-        var pageResponse = serie.map(SerieDTO::new);
-        
-        ApiResponseDTO<SerieDTO> data = new ApiResponseDTO<>(
-            pageResponse.getContent(),                            // Dados paginados
-            PaginationResponse.fromPage(pageResponse),            // MetaData
-            null,                                         // Mensagem (ou passe uma string)
-            200                                        // Código de status
-            );
-        return ResponseEntity.ok(data);
-    }
- 
     @GetMapping("/getTypesClient")
-    public ResponseEntity<ApiResponseDTO<TipoClienteDTO>> getTypesClient() {
+    public <T> ResponseEntity<EnvelopeResponse<List<TipoClienteDTO>>> getTypesClient() {
+        // Obtenha a lista de TipoClienteDTO
+        List<TipoClienteDTO> data = tipoClienteRepository.findAll().stream()
+                .map(TipoClienteDTO::new)
+                .toList();
 
-        Pageable pageable = PageRequest.of(1,5);
-        Specification<TipoCliente> spec = Specification.where(null);
-        Page<TipoCliente> tipoCliente = tipoClienteRepository.findAll(spec,pageable);
+        // Converta a saída para EnvelopeResponse<List<TipoClienteDTO>>
+        EnvelopeResponse<List<TipoClienteDTO>> response = new EnvelopeResponse<>(data, null, null);
 
-        var pageResponse = tipoCliente.map(TipoClienteDTO::new);
-        
-        ApiResponseDTO<TipoClienteDTO> data = new ApiResponseDTO<>(
-            pageResponse.getContent(),                            // Dados paginados
-            PaginationResponse.fromPage(pageResponse),            // MetaData
-            null,                                         // Mensagem (ou passe uma string)
-            200                                        // Código de status
-            );
-        return ResponseEntity.ok(data);
-        
+        return ResponseEntity.ok(response);
+
     }
- 
+
     @GetMapping("/getTypesClientBySlug")
     public ResponseEntity<List<TipoClienteDTO>> getTypesClientBySlug(@RequestParam(required = false) String slug) {
         if (slug != null) {
             var tipoCliente = tipoClienteRepository.findBySlug(slug).stream()
-            .map(TipoClienteDTO::new).toList();
+                    .map(TipoClienteDTO::new).toList();
             return ResponseEntity.ok(tipoCliente);
         } else {
             var lista = tipoClienteRepository.findAll().stream()
-                                            .map(TipoClienteDTO::new)
-                                            .toList();
+                    .map(TipoClienteDTO::new)
+                    .toList();
             return ResponseEntity.ok(lista);
         }
     }
- 
-}
 
+}
