@@ -2,6 +2,8 @@ package com.unig4telco.grecio.diogo.Backend.Modules.crm.configs.generos.generosL
 
 import java.util.Date;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.unig4telco.grecio.diogo.Backend.Helpers.BooleanStringDeserializer;
 import com.unig4telco.grecio.diogo.Backend.Modules.crm.configs.generos._domain.Generos;
 
 public record GeneroDTO(
@@ -9,7 +11,7 @@ public record GeneroDTO(
     String descricao,
     String abreviacao,
     String slug,
-    Boolean is_actived,
+    @JsonDeserialize(using = BooleanStringDeserializer.class) Boolean is_actived,    
     Boolean is_deleted,
     Date created_at,
     Date updated_at
