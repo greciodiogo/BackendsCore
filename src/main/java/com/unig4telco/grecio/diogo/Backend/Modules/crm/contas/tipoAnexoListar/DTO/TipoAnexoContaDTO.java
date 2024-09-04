@@ -14,7 +14,7 @@ public record TipoAnexoContaDTO(
     Integer tipoAnexo_id,
     TipoAnexoDTO tipoAnexo,
     Integer tipoConta_id,
-    TipoContaDTO tipoCliente
+    TipoContaDTO tipoConta
 
 ){    public TipoAnexoContaDTO(TipoAnexoConta tipoAnexoConta) {
     this(

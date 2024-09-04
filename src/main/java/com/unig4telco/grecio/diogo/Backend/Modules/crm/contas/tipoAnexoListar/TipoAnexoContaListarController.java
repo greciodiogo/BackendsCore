@@ -19,6 +19,13 @@ public class TipoAnexoContaListarController {
     @GetMapping("/tipoanexoconta")
     public ResponseEntity<ApiResponseDTO<TipoAnexoContaDTO>> findTipoAnexoConta() {
     
+        var data = findAllTipoAnexo();
+        return ResponseEntity.ok(data);
+    }
+
+
+    public ApiResponseDTO<TipoAnexoContaDTO> findAllTipoAnexo() {
+    
         var pageResponse = tipoanexocontaService.findAll();
 
         ApiResponseDTO<TipoAnexoContaDTO> data = new ApiResponseDTO<>(
@@ -27,6 +34,7 @@ public class TipoAnexoContaListarController {
             null,                                         // Mensagem (ou passe uma string)
             200                                        // Código de status
             );
-        return ResponseEntity.ok(data);
+        return data;
     }
+
 }
