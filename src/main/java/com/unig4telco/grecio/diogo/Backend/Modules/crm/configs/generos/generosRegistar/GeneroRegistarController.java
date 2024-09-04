@@ -28,7 +28,7 @@ public class GeneroRegistarController {
         genero.setSlug(generoDTO.slug());
 
         genero.setIs_actived(generoDTO.is_actived() != null ? generoDTO.is_actived() : true); // Valor padrão: true (ativo)
-        genero.setIs_deleted(generoDTO.is_deleted() != null ? generoDTO.is_deleted() : true); // Valor padrão: true (ativo)
+        genero.setIs_deleted(generoDTO.is_deleted() != null ? generoDTO.is_deleted() : false); // Valor padrão: true (ativo)
         genero.setCreatedAt(generoDTO.created_at() != null ? generoDTO.created_at() : new Date()); // Data atual
         genero.setUpdatedAt(generoDTO.updated_at() != null ? generoDTO.updated_at() : new Date()); // Data atual
 
