@@ -5,6 +5,8 @@ import java.util.Date;
 import com.unig4telco.grecio.diogo.Backend.Modules.configs.direccao.direccaoListar.DTO.DireccaoDTO;
 import com.unig4telco.grecio.diogo.Backend.Modules.crm.contas._domain.Conta;
 import com.unig4telco.grecio.diogo.Backend.Modules.crm.contas.tipoContaListar.DTO.TipoContaDTO;
+import com.unig4telco.grecio.diogo.Backend.Modules.geografica.DTO.PaisDTO;
+import com.unig4telco.grecio.diogo.Backend.Modules.geografica.DTO.ProvinciaDTO;
 import com.unig4telco.grecio.diogo.Backend.Modules.utilitarios.DTO.MoedaDTO;
 
 public record ContaDTO(
@@ -21,6 +23,10 @@ public record ContaDTO(
     Boolean is_deleted,
     Integer cliente_id,
     String morada,
+    Integer pais_id,
+    PaisDTO pais,
+    Integer provincia_id,
+    ProvinciaDTO provincia,
     String telefone,
     String email,
     Date createdAt,
@@ -44,6 +50,10 @@ public record ContaDTO(
         conta.getIsDeleted(),
         conta.getCliente() != null ? conta.getCliente().getId() : null,
         conta.getMorada(),
+        conta.getPais() != null ? conta.getPais().getId() : null,
+        conta.getPais() != null ? new PaisDTO(conta.getPais()) : null,
+        conta.getProvincia() != null ? conta.getProvincia().getId() : null,
+        conta.getProvincia() != null ? new ProvinciaDTO(conta.getProvincia()) : null,
         conta.getTelefone(),
         conta.getEmail(),
         conta.getCreatedAt(),
