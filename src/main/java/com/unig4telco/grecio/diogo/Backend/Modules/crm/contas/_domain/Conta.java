@@ -7,6 +7,8 @@ import java.util.Date;
 
 import com.unig4telco.grecio.diogo.Backend.Modules.configs.direccao._domain.Direccao;
 import com.unig4telco.grecio.diogo.Backend.Modules.crm.clientes._domain.Clientes;
+import com.unig4telco.grecio.diogo.Backend.Modules.geografica.domain.Pais;
+import com.unig4telco.grecio.diogo.Backend.Modules.geografica.domain.Provincia;
 import com.unig4telco.grecio.diogo.Backend.Modules.utilitarios.domain.Moeda;
 
 @Getter
@@ -52,6 +54,15 @@ public class Conta {
     @ManyToOne
     @JoinColumn(name="tipo_conta_id", referencedColumnName = "id")
     private TipoConta tipoConta;
+
+    @ManyToOne
+    @JoinColumn(name="pais_id", referencedColumnName = "id")
+    private Pais pais;
+
+    @ManyToOne
+    @JoinColumn(name="provincia_id", referencedColumnName = "id")
+    private Provincia provincia;
+
     
     private Integer user_id;
 }

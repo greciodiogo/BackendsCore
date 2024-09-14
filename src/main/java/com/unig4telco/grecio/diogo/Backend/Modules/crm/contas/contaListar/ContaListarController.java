@@ -18,7 +18,7 @@ public class ContaListarController {
         this.contaService = contaService;
     }
 
-      @GetMapping
+      @GetMapping("/cliente")
     public ResponseEntity<ApiResponseDTO<ContaDTO>> index() {
     
         var pageResponse = contaService.findAll();
