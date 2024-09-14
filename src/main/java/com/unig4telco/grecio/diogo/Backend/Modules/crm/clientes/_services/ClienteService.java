@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.unig4telco.grecio.diogo.Backend.Modules.crm.clientes._domain.Clientes;
@@ -25,14 +26,26 @@ public class ClienteService {
     public Page<ListClientesDTO> findAll(RequestClientListDTO filters) {
         int page = (filters.page() != null) ? filters.page() : 1;
         int perPage = (filters.perPage() != null) ? filters.perPage() : 5;
-        
-        Pageable pageable = PageRequest.of(page - 1, perPage);
+
+        // Validação do 'orderBy', caso esteja nulo ou vazio, será 'id'
+        String orderBy = (filters.orderBy() != null && !filters.orderBy().isEmpty()) ? filters.orderBy() : "id";
+
+        // Definir a ordenação dinâmica
+        Sort sort = Sort.by(orderBy);
+        if ("DESC".equalsIgnoreCase(filters.typeOrderBy())) {
+            sort = sort.descending();
+        } else {
+            sort = sort.ascending();
+        }
+
+        Pageable pageable = PageRequest.of(page - 1, perPage, sort);
 
         Specification<Clientes> spec = Specification.where(null);
 
         if (filters.typeClientId() != null && !filters.typeClientId().isEmpty()) {
             spec = spec.and(
-                    (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("tipo_cliente_id"), filters.typeClientId()));
+                    (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("tipo_cliente_id"),
+                            filters.typeClientId()));
         }
 
         if (filters.document() != null && !filters.document().isEmpty()) {
@@ -41,12 +54,14 @@ public class ClienteService {
         }
 
         if (filters.estadoRegisto() != null && !filters.estadoRegisto().isEmpty()) {
-            spec = spec.and((root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("estado"), filters.estadoRegisto()));
+            spec = spec.and((root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("estado"),
+                    filters.estadoRegisto()));
         }
 
         if (filters.search() != null && !filters.search().isEmpty()) {
             spec = spec
-                    .and((root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("nome"), "%" + filters.search() + "%"));
+                    .and((root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("nome"),
+                            "%" + filters.search() + "%"));
         }
         // Adicionando a condição de whereIn para o campo "estado"
         if (filters.status() != null) {
@@ -60,7 +75,6 @@ public class ClienteService {
             });
         }
 
-
         Page<Clientes> data = clienteRepository.findAll(spec, pageable);
 
         return data.map(ListClientesDTO::new);
@@ -69,37 +83,40 @@ public class ClienteService {
     public Page<BirthdayPersonList> findBirthdayPerson(RequestBirthDayListDTO filters) {
         int page = (filters.page() != null) ? filters.page() : 1;
         int perPage = (filters.perPage() != null) ? filters.perPage() : 5;
-        
+
         Pageable pageable = PageRequest.of(page - 1, perPage);
         Specification<Clientes> spec = Specification.where(null);
 
-        if (filters.tipoClienteId() != null && !filters.tipoClienteId().isEmpty()){
+        if (filters.tipoClienteId() != null && !filters.tipoClienteId().isEmpty()) {
             spec = spec.and(
-                    (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("tipo_cliente_id"), filters.tipoClienteId()));
+                    (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("tipo_cliente_id"),
+                            filters.tipoClienteId()));
         }
 
         if (filters.mes() != null && !filters.mes().isEmpty()) {
             spec = spec.and((root, query, criteriaBuilder) -> {
                 // Extrai o mês da data de nascimento usando a função MONTH do SQL
                 Integer monthValue = Integer.parseInt(filters.mes());
-                return criteriaBuilder.equal(criteriaBuilder.function("MONTH", Integer.class, root.get("dataNascimento")), monthValue);
-            });            
+                return criteriaBuilder.equal(
+                        criteriaBuilder.function("MONTH", Integer.class, root.get("dataNascimento")), monthValue);
+            });
         }
-  
+
         if (filters.dataAniversario() != null && !filters.dataAniversario().isEmpty()) {
             spec = spec.and((root, query, criteriaBuilder) -> {
                 // Converte o parâmetro de data (String) para LocalDate
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                 LocalDate parsedDate = LocalDate.parse(filters.dataAniversario(), formatter);
-                
+
                 // Compara a data de nascimento completa
                 return criteriaBuilder.equal(root.get("dataNascimento"), parsedDate);
             });
         }
-        
+
         if (filters.search() != null && !filters.search().isEmpty()) {
             spec = spec
-                    .and((root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("nome"), "%" + filters.search() + "%"));
+                    .and((root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("nome"),
+                            "%" + filters.search() + "%"));
         }
 
         Page<Clientes> data = clienteRepository.findAll(spec, pageable);
